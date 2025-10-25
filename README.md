@@ -126,10 +126,8 @@ This project is licensed under the MIT License - see LICENSE for details.
 🙏 Acknowledgments
 Thanks to the OSDev community for their incredible documentation and support.
 
-<div align="center">
 
 Made with ☕ and lots of debugging
 ⭐ Star this repo if you find it helpful! ⭐
 Report Bug · Request Feature
-</div>
 ```
