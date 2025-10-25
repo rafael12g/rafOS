@@ -106,6 +106,7 @@ sudo apt install nasm gcc qemu-system-x86 make binutils gdb
 </details>
 ```
 <details>
+    
 <summary><b>🍎 macOS</b></summary>
     
 ```bash
