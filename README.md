@@ -103,7 +103,7 @@
 sudo apt update
 sudo apt install nasm gcc qemu-system-x86 make binutils gdb
 </details> <details> <summary><b>🍎 macOS</b></summary>
-bash
+```
 Copier le code
 brew install nasm i686-elf-gcc qemu make i686-elf-gdb
 </details> <details> <summary><b>🎯 Arch Linux</b></summary>
