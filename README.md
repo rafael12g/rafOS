@@ -263,6 +263,8 @@ git push origin feature/amazing-feature
 Ideas
 🐛 Fix bugs • 📝 Improve docs • ✨ Add features • 🧪 Write tests • 🎨 Enhance UI • 🌍 Translate content
 
+```
+
 📊 Stats
 <div align="center">
 Metric	Value
