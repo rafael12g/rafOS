@@ -102,20 +102,28 @@
 ```bash
 sudo apt update
 sudo apt install nasm gcc qemu-system-x86 make binutils gdb
-</details> <details> <summary><b>🍎 macOS</b></summary>
 ```
+
+</details> <details> <summary><b>🍎 macOS</b></summary>
+  
+```bash
 Copier le code
 brew install nasm i686-elf-gcc qemu make i686-elf-gdb
+```
 </details> <details> <summary><b>🎯 Arch Linux</b></summary>
-bash
+  
+```bash
 Copier le code
 sudo pacman -S nasm gcc qemu make gdb
+```
+
 </details> <details> <summary><b>🪟 Windows (WSL)</b></summary>
-bash
+  
+```bash
 Copier le code
 sudo apt update
 sudo apt install nasm gcc qemu-system-x86 make binutils gdb
-</details>
+```
 ⚡ Quick Start
 bash
 Copier le code
