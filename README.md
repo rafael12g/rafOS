@@ -69,6 +69,8 @@ graph LR
     style E fill:#2196F3,color:#fff
     style F fill:#2196F3,color:#fff
 ```
+
+```mermaid
 Boot Sequence
 sequenceDiagram
     autonumber
@@ -101,6 +103,8 @@ graph TB
         D[0x000B8000 - VGA Memory]
         E[0xFFFFFFFF - End]
     end
+```
+```mermaid
     
     A --> B
     B --> C
@@ -112,6 +116,7 @@ graph TB
     style C fill:#4CAF50,color:#fff
     style D fill:#2196F3,color:#fff
     style E fill:#9E9E9E,color:#fff
+```
 
 🚀 Getting Started
 Prerequisites
