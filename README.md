@@ -103,7 +103,6 @@ CustomOS is an educational operating system written in **x86 Assembly** and **C*
 ```bash
 sudo apt update
 sudo apt install nasm gcc qemu-system-x86 make binutils gdb
-</details>
 ```
 <details>
     
