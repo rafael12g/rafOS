@@ -109,6 +109,7 @@ graph TB
     style C fill:#4CAF50,color:#fff
     style D fill:#2196F3,color:#fff
     style E fill:#9E9E9E,color:#fff
+```
 
 🚀 Getting Started
 Prerequisites
