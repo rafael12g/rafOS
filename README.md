@@ -1,75 +1,39 @@
-# 🖥️ CustomOS
+# CustomOS
 
-**A minimal x86 operating system built from scratch for educational purposes**
+A minimal x86 operating system built from scratch for educational purposes.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-x86-blue.svg)](.)
-[![Language](https://img.shields.io/badge/language-C%20%7C%20Assembly-orange.svg)](.)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](.)
-
-> **"If you want to truly understand how computers work, build your own operating system."**
+> "If you want to truly understand how computers work, build your own operating system."
 > 
-> This project is my journey into the depths of systems programming. Feel free to learn from it, modify it, and make it your own. All I ask is that you share your knowledge with others as freely as it was shared with you.
+> This project is my journey into systems programming. Feel free to learn from it, modify it, and make it your own. All I ask is that you share your knowledge with others as freely as it was shared with you.
 
----
+## About
 
-## 📖 About
+CustomOS is an educational operating system written in x86 Assembly and C. This is a learning project to understand OS fundamentals: bootloaders, protected mode, interrupts, and drivers.
 
-CustomOS is an educational operating system written from scratch in x86 Assembly and C. This project exists to demystify operating system development and provide a hands-on learning resource for anyone curious about how computers really work at the lowest level.
+## Features
 
-**This is a learning project.** It's not meant for production use. The goal is to understand OS fundamentals: bootloaders, protected mode, interrupts, drivers, and kernel development.
-
----
-
-## ✨ Features
-
-**Boot System:**
-- Custom 16-bit bootloader (512 bytes)
-- Disk reading via BIOS interrupts
-- Protected mode transition
-- Kernel loading from disk
-
-**Kernel Core:**
-- 32-bit protected mode kernel in C
-- Global Descriptor Table (GDT) setup
-- Interrupt Descriptor Table (IDT) implementation
-- CPU exception handlers (32 ISRs)
-- Hardware interrupt handling (16 IRQs)
-- PIC remapping and configuration
-
-**Hardware Drivers:**
+- Custom 16-bit bootloader
+- 32-bit protected mode kernel
 - VGA text mode driver (80x25, 16 colors)
-- PS/2 keyboard driver (US QWERTY layout)
-- PIT timer driver (configurable frequency)
+- PS/2 keyboard driver (US QWERTY)
+- PIT timer driver
+- Interrupt handling (ISRs and IRQs)
+- Basic standard library functions
 
-**Standard Library:**
-- String functions (strlen, strcmp, strcpy, strcat)
-- Memory functions (memcpy, memset, memcmp)
-- Number conversion (itoa, hex conversion)
-- Port I/O operations (inb, outb)
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-You need these tools installed:
-
 ```bash
-# On Ubuntu/Debian
-sudo apt-get update
+# Ubuntu/Debian
 sudo apt-get install nasm gcc qemu-system-x86 make
 
-# On macOS
+# macOS
 brew install nasm i686-elf-gcc qemu make
 
-# On Arch Linux
+# Arch Linux
 sudo pacman -S nasm gcc qemu make
-
-```
-#Building and Running
-
+Build and Run
 # Clone the repository
 git clone https://github.com/yourusername/CustomOS.git
 cd CustomOS
@@ -82,65 +46,65 @@ make run
 
 # Clean build files
 make clean
-
-
-That's it! You should see CustomOS booting in QEMU. (if i'm lucky)
-
-
-##📁 Project Structure
-
-rafOS/
-├── boot/
-│   ├── boot_sect.asm      # 16-bit bootloader (stage 1)
-│   └── kernel_entry.asm   # Kernel entry point (assembly)
-├── kernel/
-│   ├── kernel.c           # Main kernel code
-│   ├── kernel.h           # Kernel headers
-│   ├── low_level.c        # Low-level utilities (port I/O)
-│   ├── low_level.h
-│   └── util.c             # Standard library functions
-├── drivers/
-│   ├── screen.c           # VGA text mode driver
-│   ├── screen.h
-│   ├── keyboard.c         # PS/2 keyboard driver
-│   ├── keyboard.h
-│   ├── timer.c            # PIT timer driver
-│   └── timer.h
-├── cpu/
-│   ├── gdt.c              # Global Descriptor Table
-│   ├── gdt.h
-│   ├── idt.c              # Interrupt Descriptor Table
-│   ├── idt.h
-│   ├── isr.c              # Interrupt Service Routines
-│   ├── isr.h
-│   ├── interrupt.asm      # Low-level interrupt handlers
-│   ├── timer.c
-│   └── timer.h
-├── Makefile               # Build system
-├── README.md              # This file
-└── LICENSE                # MIT License
-
-
----
-
-
-🔧 How It Works
+Project Structure
+graph TD
+    A[CustomOS] --> B[boot/]
+    A --> C[kernel/]
+    A --> D[drivers/]
+    A --> E[cpu/]
+    A --> F[libc/]
+    
+    B --> B1[boot_sect.asm - Bootloader 16-bit]
+    
+    C --> C1[kernel.c - Main kernel]
+    C --> C2[kernel_entry.asm - Entry point]
+    
+    D --> D1[screen.c - VGA driver]
+    D --> D2[keyboard.c - PS/2 keyboard]
+    D --> D3[timer.c - PIT timer]
+    
+    E --> E1[gdt.c - Global Descriptor Table]
+    E --> E2[idt.c - Interrupt Descriptor Table]
+    E --> E3[isr.c - Interrupt Service Routines]
+    
+    F --> F1[string.c - String functions]
+    F --> F2[mem.c - Memory functions]
 Boot Process
+sequenceDiagram
+    participant BIOS
+    participant Bootloader
+    participant Kernel
+    
+    BIOS->>Bootloader: Load from disk sector 0
+    Bootloader->>Bootloader: Switch to protected mode
+    Bootloader->>Kernel: Load kernel from disk
+    Bootloader->>Kernel: Jump to kernel entry
+    Kernel->>Kernel: Setup GDT
+    Kernel->>Kernel: Setup IDT
+    Kernel->>Kernel: Initialize drivers
+    Kernel->>Kernel: Enter main loop
+How It Works
 
-BIOS Stage: Computer powers on, BIOS loads first 512 bytes (bootloader) from disk to 0x7C00
-Bootloader Stage: 
-Loads kernel from disk sectors to memory at 0x1000
-Enables A20 gate for >1MB memory access
-Sets up GDT and switches to 32-bit protected mode
-Jumps to kernel entry point
+BIOS loads the bootloader (512 bytes) from disk
+Bootloader loads the kernel, switches to protected mode
+Kernel initializes interrupts and drivers, enters main loop
 
+Roadmap
 
-Kernel Stage:
-Initializes GDT and IDT
-Installs interrupt handlers (ISRs and IRQs)
-Initializes hardware drivers (screen, keyboard, timer)
-Enters main kernel loop
+ Memory management (physical and virtual)
+ Shell with basic commands
+ Simple file system
+ Process support and multitasking
 
+Learning Resources
 
+OSDev.org - OS development wiki
+Intel Software Developer Manuals
+"Operating Systems: Design and Implementation" by Andrew S. Tanenbaum
 
-Memory Map
+Contributing
+This is a personal learning project, but contributions are welcome! Feel free to open issues or submit pull requests.
+License
+MIT License - see LICENSE file for details.
+Contact
+GitHub: @yourusername
