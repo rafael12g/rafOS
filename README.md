@@ -128,7 +128,7 @@ sudo apt install nasm gcc qemu-system-x86 make binutils gdb
 bash
 Copier le code
 # 1️⃣ Clone the repository
-git clone https://github.com/yourusername/CustomOS.git
+git clone https://github.com/rafael12g/rafOS.git
 cd CustomOS
 
 # 2️⃣ Build the OS
@@ -278,7 +278,7 @@ This project is licensed under the MIT License — see LICENSE for details.
 ☕ Coffee — the real scheduler behind this project
 
 🌟 Star History
-<div align="center"> <img src="https://api.star-history.com/svg?repos=yourusername/CustomOS&type=Date" alt="Star History Chart" /> </div>
+<div align="center"> <img src="https://api.star-history.com/svg?repos=rafael12g/rafOS&type=Date" alt="Star History Chart" /> </div>
 <div align="center">
 💻 Made with ☕ and countless debug sessions
 If this project helped you, please consider giving it a ⭐
