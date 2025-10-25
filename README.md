@@ -93,13 +93,11 @@ sequenceDiagram
     end
 Memory Layout
 graph TB
-    subgraph Memory Map
-        A[0x00000000 - Real Mode IVT]
-        B[0x00007C00 - Bootloader]
-        C[0x00001000 - Kernel]
-        D[0x000B8000 - VGA Memory]
-        E[0xFFFFFFFF - End]
-    end
+    A[0x00000000<br/>Real Mode IVT]
+    B[0x00007C00<br/>Bootloader]
+    C[0x00001000<br/>Kernel]
+    D[0x000B8000<br/>VGA Memory]
+    E[0xFFFFFFFF<br/>End]
     
     A --> B
     B --> C
