@@ -263,10 +263,9 @@ git push origin feature/amazing-feature
 Ideas
 🐛 Fix bugs • 📝 Improve docs • ✨ Add features • 🧪 Write tests • 🎨 Enhance UI • 🌍 Translate content
 
-```
+
 
 📊 Stats
-<div align="center">
 Metric	Value
 Lines of Code	~2 000 +
 Files	25 +
@@ -275,7 +274,8 @@ Kernel Size	~50 KB
 Resolution	80×25 text
 Colors	16
 
-</div>
+
+```
 📄 License
 This project is licensed under the MIT License — see LICENSE for details.
 
