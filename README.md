@@ -110,7 +110,7 @@ sudo apt install nasm gcc qemu-system-x86 make binutils gdb
     
 ```bash
 brew install nasm i686-elf-gcc qemu make i686-elf-gdb
-</details>
+
 
 <details>
 <summary><b>🎯 Arch Linux</b></summary>
