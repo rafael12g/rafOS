@@ -40,7 +40,7 @@ make run
 make clean
 Project Structure
 
-```
+
 CustomOS/
 ├── boot/           # Bootloader
 ├── kernel/         # Kernel code
@@ -48,6 +48,8 @@ CustomOS/
 ├── cpu/            # GDT, IDT, interrupts
 ├── libc/           # Standard library
 └── Makefile
+
+```
 How It Works
 
 BIOS loads the bootloader
