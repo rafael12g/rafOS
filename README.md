@@ -124,6 +124,7 @@ Copier le code
 sudo apt update
 sudo apt install nasm gcc qemu-system-x86 make binutils gdb
 ```
+
 ⚡ Quick Start
 bash
 Copier le code
@@ -149,6 +150,7 @@ Ctrl + Alt + 1	Switch to monitor console
 Ctrl + Alt + 2	Switch back to OS
 Ctrl + A, X	Exit QEMU
 
+```bash
 📁 Project Structure
 csharp
 Copier le code
@@ -180,6 +182,9 @@ CustomOS/
 │
 ├── 🔧 Makefile
 └── 📄 README.md
+
+```
+
 🔄 How It Works
 pgsql
 Copier le code
