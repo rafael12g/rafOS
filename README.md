@@ -2,256 +2,186 @@
 
 <div align="center">
 
-**A minimal x86 operating system built from scratch**
+**A minimal x86 operating system built from scratch for learning purposes**
 
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Platform](https://img.shields.io/badge/platform-x86-blue)
-![Language](https://img.shields.io/badge/language-C%20%7C%20Assembly-orange)
-![License](https://img.shields.io/badge/license-MIT-green)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-x86-orange.svg)]()
+[![Language](https://img.shields.io/badge/language-C%20%7C%20ASM-green.svg)]()
 
 </div>
 
 ---
 
-## 💭 Philosophy
-
-> [!NOTE]
-> *"If you want to truly understand how computers work, build your own operating system."*
-> 
-> This project is my journey into systems programming. Feel free to learn from it, modify it, and make it your own. **All I ask is that you share your knowledge with others as freely as it was shared with you.**
-
----
-
 ## 📖 About
 
-CustomOS is an educational operating system written in **x86 Assembly** and **C**. This is a learning project to understand OS fundamentals: bootloaders, protected mode, interrupts, and hardware drivers.
+CustomOS is an educational operating system written in **x86 Assembly** and **C**. 
+
+This project is built from scratch to understand:
+- How bootloaders work
+- Protected mode and memory management
+- Hardware interrupts and drivers
+- Low-level programming
+
+> **Note:** This is a personal learning project. Feel free to learn from it and contribute!
 
 ---
 
 ## ✨ Features
 
-> [!TIP]
-> - ⚙️ Custom 16-bit bootloader
-> - 🚀 32-bit protected mode kernel
-> - 📺 VGA text mode driver (80x25, 16 colors)
-> - ⌨️ PS/2 keyboard driver (US QWERTY layout)
-> - ⏱️ PIT timer driver (18.222 Hz)
-> - 🔔 Interrupt handling (ISRs and IRQs)
-> - 📚 Basic standard library functions
+- ✅ Custom 16-bit bootloader
+- ✅ 32-bit protected mode kernel
+- ✅ VGA text mode driver (80x25, 16 colors)
+- ✅ PS/2 keyboard driver
+- ✅ PIT timer driver
+- ✅ Interrupt handling (ISR/IRQ)
+- ✅ Basic standard library
 
 ---
 
-## 🏗️ Architecture
+## 🚀 Quick Start
 
-### Project Structure
+### Requirements
 
-```mermaid
-graph LR
-    A[CustomOS] --> B[boot/]
-    A --> C[kernel/]
-    A --> D[drivers/]
-    A --> E[cpu/]
-    A --> F[libc/]
-    
-    B --> B1[boot_sect.asm]
-    C --> C1[kernel.c]
-    C --> C2[kernel_entry.asm]
-    D --> D1[screen.c]
-    D --> D2[keyboard.c]
-    D --> D3[timer.c]
-    E --> E1[gdt.c]
-    E --> E2[idt.c]
-    E --> E3[isr.c]
-    F --> F1[string.c]
-    F --> F2[mem.c]
-    
-    style A fill:#4CAF50,color:#fff
-    style B fill:#2196F3,color:#fff
-    style C fill:#2196F3,color:#fff
-    style D fill:#2196F3,color:#fff
-    style E fill:#2196F3,color:#fff
-    style F fill:#2196F3,color:#fff
-Boot Sequence
-sequenceDiagram
-    autonumber
-    participant BIOS
-    participant Bootloader
-    participant Kernel
-    participant Hardware
-    
-    BIOS->>Bootloader: Load from disk (sector 0)
-    Note over Bootloader: Real Mode (16-bit)
-    Bootloader->>Bootloader: Load kernel from disk
-    Bootloader->>Bootloader: Setup GDT
-    Bootloader->>Bootloader: Switch to Protected Mode
-    Note over Bootloader: Protected Mode (32-bit)
-    Bootloader->>Kernel: Jump to kernel entry point
-    Kernel->>Kernel: Initialize IDT
-    Kernel->>Hardware: Initialize drivers
-    Note over Kernel,Hardware: VGA, Keyboard, Timer
-    Kernel->>Kernel: Enter main loop
-    loop Event Loop
-        Hardware->>Kernel: Hardware interrupt
-        Kernel->>Hardware: Handle interrupt
-    end
-Memory Layout
-graph TB
-    A[0x00000000<br/>Real Mode IVT]
-    B[0x00007C00<br/>Bootloader]
-    C[0x00001000<br/>Kernel]
-    D[0x000B8000<br/>VGA Memory]
-    E[0xFFFFFFFF<br/>End]
-    
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    
-    style A fill:#FF5722,color:#fff
-    style B fill:#FF9800,color:#fff
-    style C fill:#4CAF50,color:#fff
-    style D fill:#2196F3,color:#fff
-    style E fill:#9E9E9E,color:#fff
-```
+- **NASM** - Assembler
+- **GCC** - C Compiler (i686-elf-gcc recommended)
+- **QEMU** - x86 Emulator
+- **Make** - Build tool
 
-🚀 Getting Started
-Prerequisites
+### Installation
 
-[!IMPORTANT]
-You need the following tools installed:
-
-NASM (Netwide Assembler)
-GCC (GNU Compiler Collection)
-QEMU (x86 emulator)
-Make (Build tool)
-
-
-<details>
-<summary><b>Ubuntu/Debian</b></summary>
-
-sudo apt-get update
-sudo apt-get install nasm gcc qemu-system-x86 make
-</details>
-
-<details>
-<summary><b>macOS</b></summary>
-
+**Ubuntu/Debian:**
+```bash
+sudo apt update
+sudo apt install nasm gcc qemu-system-x86 make
+macOS:
 brew install nasm i686-elf-gcc qemu make
-</details>
-
-<details>
-<summary><b>Arch Linux</b></summary>
-
+Arch Linux:
 sudo pacman -S nasm gcc qemu make
-</details>
-
-Build and Run
-# Clone the repository
+Build & Run
+# Clone repository
 git clone https://github.com/yourusername/CustomOS.git
 cd CustomOS
 
-# Build the OS
-make
+# Build
+make all
 
 # Run in QEMU
 make run
 
-# Clean build files
+# Clean
 make clean
 
-[!WARNING]
-Make sure you have at least 512MB of RAM available for QEMU.
-
-
-📂 Directory Structure
+📁 Project Structure
 CustomOS/
 │
-├── 📁 boot/                  # Bootloader code
-│   └── boot_sect.asm         # 16-bit bootloader (512 bytes)
+├── boot/
+│   └── boot_sect.asm          # Bootloader (16-bit real mode)
 │
-├── 📁 kernel/                # Kernel code
-│   ├── kernel.c              # Main kernel logic
-│   └── kernel_entry.asm      # Kernel entry point
+├── kernel/
+│   ├── kernel.c               # Main kernel code
+│   └── kernel_entry.asm       # Kernel entry point (32-bit)
 │
-├── 📁 drivers/               # Hardware drivers
-│   ├── screen.c              # VGA text mode driver
-│   ├── keyboard.c            # PS/2 keyboard driver
-│   └── timer.c               # PIT timer driver
+├── drivers/
+│   ├── screen.c               # VGA text driver
+│   ├── keyboard.c             # Keyboard driver
+│   └── timer.c                # Timer driver
 │
-├── 📁 cpu/                   # CPU-related code
-│   ├── gdt.c                 # Global Descriptor Table
-│   ├── idt.c                 # Interrupt Descriptor Table
-│   └── isr.c                 # Interrupt Service Routines
+├── cpu/
+│   ├── gdt.c                  # Global Descriptor Table
+│   ├── idt.c                  # Interrupt Descriptor Table
+│   ├── isr.c                  # Interrupt Service Routines
+│   └── timer.c                # PIT configuration
 │
-├── 📁 libc/                  # Standard library
-│   ├── string.c              # String functions
-│   └── mem.c                 # Memory functions
+├── libc/
+│   ├── string.c               # String utilities
+│   └── mem.c                  # Memory utilities
 │
-├── Makefile                  # Build system
-└── README.md                 # This file
+└── Makefile                   # Build configuration
+
+🔧 How It Works
+Boot Process
+
+BIOS loads the bootloader from disk sector 0
+Bootloader (16-bit real mode):
+Loads the kernel from disk
+Sets up GDT (Global Descriptor Table)
+Switches to 32-bit protected mode
+Jumps to kernel
+
+
+Kernel (32-bit protected mode):
+Initializes IDT (Interrupt Descriptor Table)
+Sets up hardware drivers (VGA, keyboard, timer)
+Enters main event loop
+
+
+
+Memory Map
+0x00000000 - 0x000003FF    Real Mode IVT
+0x00000400 - 0x000004FF    BIOS Data Area
+0x00007C00 - 0x00007DFF    Bootloader (512 bytes)
+0x00001000 - 0x0009FFFF    Kernel Code & Data
+0x000A0000 - 0x000BFFFF    Video Memory
+0x000B8000 - 0x000B8FA0    VGA Text Buffer (80x25)
+0x00100000+                Extended Memory
+Interrupt Handling
+
+ISR 0-31: CPU exceptions (divide by zero, page fault, etc.)
+IRQ 0: Timer (PIT at 18.222 Hz)
+IRQ 1: Keyboard (PS/2)
+IRQ 2-15: Other hardware interrupts
+
 
 🎯 Roadmap
-gantt
-    title CustomOS Development Roadmap
-    dateFormat YYYY-MM
-    section Phase 1
-    Bootloader & Kernel     :done, 2024-01, 2024-02
-    VGA & Keyboard Drivers  :done, 2024-02, 2024-03
-    section Phase 2
-    Memory Management       :active, 2024-03, 2024-05
-    Shell Interface         :2024-05, 2024-07
-    section Phase 3
-    File System             :2024-07, 2024-10
-    Multitasking            :2024-10, 2025-01
-Current Progress:
+Completed:
 
- Bootloader and kernel setup
- Protected mode switch
+ Bootloader and protected mode
  VGA driver
  Keyboard driver
  Timer driver
- Interrupt handling
+ Basic interrupt handling
+
+In Progress:
+
  Memory management (paging)
- Shell with commands
- Simple file system
- Process support
- Multitasking
+ Shell with basic commands
+
+Future:
+
+ File system (FAT12)
+ Process management
+ Multitasking scheduler
+ User mode
 
 
-📚 Learning Resources
+📚 Resources
+Here are the resources that helped me build this OS:
 
-[!NOTE]
-These resources helped me build this OS:
-
-📖 OSDev.org - Comprehensive OS development wiki
-📘 Intel Software Developer Manuals - Official x86 reference
-📕 "Operating Systems: Design and Implementation" by Andrew S. Tanenbaum
-📙 "Operating System Concepts" by Silberschatz, Galvin, Gagne
-
+OSDev Wiki - Comprehensive OS development resource
+Intel x86 Manuals - Official CPU documentation
+Bran's Kernel Development Tutorial - Beginner-friendly guide
+JamesM's Kernel Tutorial - Another great tutorial
 
 
 🤝 Contributing
+Contributions are welcome! This is a learning project, so:
 
-[!TIP]
-This is a personal learning project, but contributions are welcome!
-Feel free to:
+🐛 Bug reports are appreciated
+💡 Feature suggestions are welcome
+🔧 Pull requests should be well-documented
+📖 Documentation improvements are always helpful
 
-🐛 Report bugs
-💡 Suggest features
-🔧 Submit pull requests
-📖 Improve documentation
-
-
+Please open an issue before making major changes.
 
 📄 License
-MIT License - see LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-📬 Contact
-GitHub: @yourusername
+🙏 Acknowledgments
+Thanks to the OSDev community for their incredible documentation and support.
 
 <div align="center">
 
 Made with ☕ and lots of debugging
-⭐ Star this repo if you found it helpful!
+⭐ Star this repo if you find it helpful!
 </div>
 ```
