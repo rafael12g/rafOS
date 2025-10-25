@@ -100,7 +100,7 @@ Future:
  Process management
  Multitasking
 
-
+```
 📚 Learning Resources
 
 📖 OSDev Wiki - OS development encyclopedia
