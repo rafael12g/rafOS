@@ -39,6 +39,8 @@ make run
 # Clean build files
 make clean
 Project Structure
+
+```
 CustomOS/
 ├── boot/           # Bootloader
 ├── kernel/         # Kernel code
