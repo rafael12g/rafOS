@@ -61,7 +61,7 @@ graph LR
     E --> E3[isr.c]
     F --> F1[string.c]
     F --> F2[mem.c]
-    
+```
     style A fill:#4CAF50,color:#fff
     style B fill:#2196F3,color:#fff
     style C fill:#2196F3,color:#fff
