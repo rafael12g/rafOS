@@ -275,7 +275,7 @@ Resolution	80×25 text
 Colors	16
 
 
-```
+
 📄 License
 This project is licensed under the MIT License — see LICENSE for details.
 
@@ -284,6 +284,8 @@ This project is licensed under the MIT License — see LICENSE for details.
 🎓 Bran Kernighan — inspiration for countless devs
 🔥 Linus Torvalds — proof it can be done
 ☕ Coffee — the real scheduler behind this project
+
+```
 
 🌟 Star History
 <div align="center"> <img src="https://api.star-history.com/svg?repos=rafael12g/rafOS&type=Date" alt="Star History Chart" /> </div>
