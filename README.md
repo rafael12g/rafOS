@@ -104,10 +104,11 @@ CustomOS is an educational operating system written in **x86 Assembly** and **C*
 sudo apt update
 sudo apt install nasm gcc qemu-system-x86 make binutils gdb
 </details>
-
+```
 <details>
 <summary><b>🍎 macOS</b></summary>
-
+    
+```bash
 brew install nasm i686-elf-gcc qemu make i686-elf-gdb
 </details>
 
