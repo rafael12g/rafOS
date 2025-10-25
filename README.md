@@ -291,4 +291,4 @@ If this project helped you, please consider giving it a ⭐
 <br><br>
 Report Bug • Request Feature • Back to Top
 
-</div> ```
+</div>
