@@ -120,7 +120,7 @@ sudo pacman -S nasm gcc qemu make gdb
 ```
 
 </details> 
-<details> <summary><b>🪟 Windows (WSL)</b></summary>
+<summary><b>🪟 Windows (WSL)</b></summary>
   
 ```
 Copier le code
