@@ -68,7 +68,9 @@ graph LR
     style D fill:#2196F3,color:#fff
     style E fill:#2196F3,color:#fff
     style F fill:#2196F3,color:#fff
+
 ```
+```mermaid
 Boot Sequence
 sequenceDiagram
     autonumber
@@ -92,6 +94,7 @@ sequenceDiagram
         Hardware->>Kernel: Hardware interrupt
         Kernel->>Hardware: Handle interrupt
     end
+```
 Memory Layout
 graph TB
     A[0x00000000<br/>Real Mode IVT]
