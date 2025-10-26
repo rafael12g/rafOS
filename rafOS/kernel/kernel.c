@@ -41,6 +41,7 @@ void cmd_about() {
     print("Author: Raf\n");
     print("Built with: GCC, NASM, Python\n");
     print("Architecture: x86 (32-bit)\n\n");
+    print("je suis vrm le goat\n");
 }
 
 void cmd_uptime() {
