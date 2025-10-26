@@ -2,7 +2,8 @@
 
 <div align="center">
 
-<img width="773" height="525" alt="rafOS" src="https://github.com/user-attachments/assets/a12d0546-73db-4947-9565-cf016e7e3a3b" />
+<img width="719" height="400" alt="rafOS" src="https://github.com/user-attachments/assets/81a081d2-8364-4577-81a3-c68ef96a10be" />
+
 
 Un système d'exploitation minimaliste x86 32-bit avec shell interactif
 
