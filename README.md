@@ -17,6 +17,16 @@ Un système d'exploitation minimaliste x86 32-bit avec shell interactif
 
 </div>
 
+
+
+
+<img width="719" height="467" alt="1erimg_customOS" src="https://github.com/user-attachments/assets/44ec7c5b-918f-4aa3-b5dd-2e35ce964389" />
+
+
+
+
+
+
 ---
 
 ## 📋 Table des Matières
