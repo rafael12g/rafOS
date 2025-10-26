@@ -305,4 +305,6 @@ Temps de boot : < 1 seconde
 
 Langages : C (60%), Assembly (40%)
 
+```
+
 <div align="center"> RafOS - Made with ❤️ by Raf ⭐ Star ce projet si vous le trouvez utile ! </div> ```
