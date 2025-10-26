@@ -1,3 +1,5 @@
+# 🖥️ RafOS
+
 <div align="center">
 
   ____       __  ___  _____ 
@@ -9,9 +11,9 @@
 
 Un système d'exploitation minimaliste x86 32-bit avec shell interactif
 
-<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
-<img src="https://img.shields.io/badge/platform-x86-lightgrey.svg" alt="Platform" />
-<img src="https://img.shields.io/badge/language-C%20%2B%20ASM-orange.svg" alt="Language" />
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-x86-lightgrey.svg)]()
+[![Language](https://img.shields.io/badge/language-C%20%2B%20ASM-orange.svg)]()
 
 </div>
 
@@ -29,10 +31,12 @@ Un système d'exploitation minimaliste x86 32-bit avec shell interactif
 - [Structure du projet](#-structure-du-projet)
 - [Développement](#-développement)
 - [Dépannage](#-dépannage)
+- [Configuration minimale et recommandée](#-configuration-minimale-et-recommandée)
 - [Contribuer](#-contribuer)
 - [Licence](#-licence)
 - [Auteur](#-auteur)
 - [Remerciements](#-remerciements)
+- [Statistiques](#-statistiques)
 
 ---
 
@@ -233,6 +237,26 @@ Commande non trouvée → installer le package manquant (gcc, nasm, qemu)
 
 Clavier ne répond pas → cliquer dans QEMU, Ctrl+Alt+G
 
+🖥️ Configuration minimale et recommandée
+Processeur
+Minimum : CPU x86 (32-bit ou 64-bit) compatible QEMU/VirtualBox
+
+Recommandé : Processeur moderne avec VT-x / AMD-V
+
+Exemple : Intel Core i3 / AMD Ryzen 3 ou équivalent
+
+RAM
+Minimum : 64 MB
+
+Recommandé : 128 MB ou plus
+
+RafOS utilise ~640 KB de mémoire conventionnelle
+
+Le reste est pour l’émulateur et le système hôte
+
+Stockage
+Quelques Mo suffisent (~15-20 KB)
+
 🤝 Contribuer
 Forker le projet
 
@@ -258,8 +282,8 @@ MIT License – voir LICENSE
 
 👤 Auteur
 Raf
-GitHub: @rafael12g
-Email: 0565ara12@gmail.com
+GitHub: @votre-username
+Email: votre-email@example.com
 
 🌟 Remerciements
 OSDev Community
@@ -268,7 +292,7 @@ QEMU
 
 NASM
 
-Tous les contributeurs (dédicace a perssone je me suis fait seul)
+Tous les contributeurs
 
 📊 Statistiques
 Lignes de code : ~1000
@@ -278,11 +302,5 @@ Taille OS : ~15 KB
 Temps de boot : < 1 seconde
 
 Langages : C (60%), Assembly (40%)
-
-RAM : 64mB  recommandé : 128mB
-
-CPU : une patate
-
-```
 
 <div align="center"> RafOS - Made with ❤️ by Raf ⭐ Star ce projet si vous le trouvez utile ! </div> ```
