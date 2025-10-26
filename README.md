@@ -1,301 +1,584 @@
 <div align="center">
 
-# 🖥️ CustomOS  
-*A minimal x86 operating system built from scratch for learning purposes*
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Platform](https://img.shields.io/badge/platform-x86-orange.svg)
-![Made with](https://img.shields.io/badge/made%20with-C%20%7C%20ASM-green.svg)
-![Lines of Code](https://img.shields.io/badge/lines%20of%20code-2000%2B-brightgreen.svg)
-![Build](https://img.shields.io/badge/build-passing-success.svg)
-
-**[Features](#-features)** • **[Installation](#-installation)** • **[Quick Start](#-quick-start)** • **[Documentation](#-project-structure)** • **[Roadmap](#-roadmap)**
-
+  ____       __  ___  _____ 
+ |  _ \ __ _ / _|/ _ \/ ____|
+ | |_) / _` | |_| | | (___  
+ |  _ < (_| |  _| |_| |\___ \
+ |_| \_\__,_|_|  \___/ ____)_|
+                      |_____/ 
+Un système d'exploitation minimaliste x86 32-bit avec shell interactif
+<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+<img src="https://img.shields.io/badge/platform-x86-lightgrey.svg" alt="Platform" />
+<img src="https://img.shields.io/badge/language-C%20%2B%20ASM-orange.svg" alt="Language" />
 </div>
 
----
 
-## 💡 About
+📋 Table des Matières
 
-**CustomOS** is an educational operating system written in **x86 Assembly** and **C** to understand how operating systems work at a low level.
+À propos
+Fonctionnalités
+Prérequis
+Installation
+Compilation
+Utilisation
+Commandes disponibles
+Architecture
+Structure du projet
+Développement
+Dépannage
+Contribuer
+Licence
 
-<table>
-<tr>
-<td>
 
-### 🎓 Learning Goals
-- Bootloader development  
-- Protected mode programming  
-- Hardware driver implementation  
-- Interrupt handling  
-- Memory management basics  
+🎯 À propos
+RafOS est un système d'exploitation éducatif développé from scratch en C et Assembly x86. Il démarre directement depuis un bootloader custom, passe en mode protégé 32-bit et offre un shell interactif fonctionnel.
+Pourquoi RafOS ?
 
-</td>
-<td>
+🎓 Éducatif : Comprendre les bases d'un OS (boot, mode protégé, drivers)
+🔧 Minimaliste : Code simple et lisible (~1000 lignes)
+💻 Fonctionnel : Shell avec commandes réelles
+🚀 Extensible : Architecture modulaire pour ajouter des features
 
-### 🔧 Tech Stack
-- **Assembly:** NASM (x86)  
-- **Language:** C  
-- **Emulator:** QEMU  
-- **Build:** GNU Make  
-- **Debugger:** GDB  
 
-</td>
-</tr>
-</table>
+✨ Fonctionnalités
+Core Features
 
-> [!NOTE]  
-> “If you want to truly understand computers, build your own OS.”  
->  
-> This project is my journey into systems programming — feel free to learn from it, fork it, and make it your own. 💜  
+✅ Bootloader custom écrit en Assembly NASM
+✅ Passage en mode protégé 32-bit avec GDT
+✅ Driver VGA pour affichage texte 80x25
+✅ Driver clavier PS/2 avec support des scancodes
+✅ Shell interactif avec prompt coloré
+✅ Gestion des commandes extensible
+✅ Scrolling automatique de l'écran
+✅ Support du Backspace et édition de ligne
 
----
+Commandes Intégrées
 
-## ✨ Features
 
-<table>
-<tr>
-<td width="50%">
 
-### 🚀 Core
-- ✅ 16-bit custom bootloader  
-- ✅ 32-bit protected mode kernel  
-- ✅ Global Descriptor Table (GDT)  
-- ✅ Interrupt Descriptor Table (IDT)  
-- ✅ ISR / IRQ handling  
-- ✅ Exception handling  
+Commande
+Description
 
-</td>
-<td width="50%">
 
-### 🔌 Drivers & Libraries
-- ✅ VGA text mode (80x25, 16 colors)  
-- ✅ PS/2 keyboard driver  
-- ✅ PIT timer (18.222 Hz)  
-- ✅ libc subset (`string`, `memory`, `I/O`)  
-- ✅ Screen scrolling & cursor  
-- ✅ Color output  
 
-</td>
-</tr>
-</table>
+help
+Affiche la liste des commandes
 
----
 
-## 🛠️ Requirements
+clear
+Efface l'écran et réaffiche le banner
 
-| Tool | Version | Purpose |
-|------|----------|----------|
-| **NASM** | 2.14+ | x86 assembler |
-| **GCC** | 7.0+ | C compiler (`i686-elf` recommended) |
-| **QEMU** | 4.0+ | Emulator |
-| **Make** | 4.0+ | Build automation |
-| **GDB** *(optional)* | 8.0+ | Debugging |
 
----
+about
+Informations sur RafOS
 
-## 📦 Installation
 
-<details>
-<summary><b>🐧 Ubuntu / Debian</b></summary>
+uptime
+Informations système (CPU, RAM, etc.)
 
-```bash
+
+echo <text>
+Affiche le texte saisi
+
+
+reboot
+Redémarre le shell
+
+
+
+🔧 Prérequis
+Systèmes supportés
+
+Linux (Ubuntu, Debian, Arch, Fedora, etc.)
+macOS (via Homebrew)
+WSL2 sur Windows
+
+Outils nécessaires
+# Compiler C
+gcc (avec support 32-bit)
+
+# Assembleur
+nasm
+
+# Linker
+ld (binutils)
+
+# Émulateur x86
+qemu-system-i386
+
+# Script de build
+python3
+
+📦 Installation
+Sur Ubuntu/Debian
 sudo apt update
-sudo apt install nasm gcc qemu-system-x86 make binutils gdb
-```
+sudo apt install -y build-essential nasm qemu-system-x86 python3
+sudo apt install -y gcc-multilib g++-multilib  # Support 32-bit
+Sur Arch Linux
+sudo pacman -S base-devel nasm qemu-system-x86 python
+Sur Fedora
+sudo dnf groupinstall "Development Tools"
+sudo dnf install nasm qemu-system-x86 python3
+sudo dnf install glibc-devel.i686 libgcc.i686  # Support 32-bit
+Sur macOS
+brew install nasm qemu python3
+brew install i686-elf-gcc  # Cross-compiler 32-bit
+Vérifier l'installation
+gcc --version
+nasm --version
+qemu-system-i386 --version
+python3 --version
 
-</details>
-<details> <summary><b>🍎 macOS</b></summary>
-  
-```bash
-Copier le code
-brew install nasm i686-elf-gcc qemu make i686-elf-gdb
-```
-</details>
-<details> <summary><b>🎯 Arch Linux</b></summary>
-  
-```bash
-Copier le code
-sudo pacman -S nasm gcc qemu make gdb
-```
+🚀 Compilation
+1. Cloner ou télécharger le projet
+cd ~
+git clone https://github.com/votre-username/rafOS.git
+cd rafOS
+Ou créer depuis zéro (voir Structure du projet)
+2. Compiler RafOS
+# Compilation simple
+./build.py
 
-</details> 
-<summary><b>🪟 Windows (WSL)</b></summary>
-  
-```
-Copier le code
-sudo apt update
-sudo apt install nasm gcc qemu-system-x86 make binutils gdb
-```
+# Nettoyer et recompiler
+./build.py clean
+./build.py
 
-⚡ Quick Start
-bash
-Copier le code
-# 1️⃣ Clone the repository
-git clone https://github.com/rafael12g/rafOS.git
-cd CustomOS
+# Compiler et lancer directement
+./build.py all
+3. Vérifier la compilation
+Si tout s'est bien passé, vous devriez voir :
+==================================================
+[*] Cleaning RafOS
+==================================================
+✅ Clean done!
 
-# 2️⃣ Build the OS
-make all
+==================================================
+[*] Compiling bootloader
+==================================================
+✅ Compiling bootloader done!
 
-# 3️⃣ Run it in QEMU
-make run
+...
 
-# 4️⃣ Debug (optional)
-make debug
+✅ RafOS built successfully! Size: XXXXX bytes
 
-# 5️⃣ Clean build files
-make clean
-🎮 QEMU Shortcuts
-Key	Action
-Ctrl + Alt + G	Release mouse from QEMU
-Ctrl + Alt + 1	Switch to monitor console
-Ctrl + Alt + 2	Switch back to OS
-Ctrl + A, X	Exit QEMU
+🚀 To run: ./build.py run
+🚀 Or build and run: ./build.py all
+Un fichier os-image.bin doit être créé (~10-20 KB).
 
-```bash
-📁 Project Structure
-csharp
-Copier le code
-CustomOS/
-├── 🥾 boot/
-│   └── boot_sect.asm          # 16-bit bootloader (512 B)
+🎮 Utilisation
+Lancer RafOS dans QEMU
+# Lancer l'OS compilé
+./build.py run
+Utilisation du shell
+Une fois RafOS démarré, vous verrez :
+  ____       __  ___  _____ 
+ |  _ \ __ _ / _|/ _ \/ ____|
+ | |_) / _` | |_| | | (___  
+ |  _ < (_| |  _| |_| |\___ \
+ |_| \_\__,_|_|  \___/ ____)_|
+                      |_____/ 
+
+RafOS v1.0 - Custom Operating System
+Type 'help' for available commands
+
+raf@RafOS:~$ _
+Raccourcis clavier
+
+Entrée : Exécuter la commande
+Backspace : Effacer le dernier caractère
+Ctrl+C dans le terminal : Quitter QEMU
+
+
+📖 Commandes disponibles
+help
+Affiche la liste complète des commandes disponibles.
+raf@RafOS:~$ help
+
+Available commands:
+  help    - Show this message
+  clear   - Clear the screen
+  echo    - Repeat your input
+  about   - About RafOS
+  uptime  - System information
+  reboot  - Restart RafOS
+clear
+Efface l'écran et réaffiche le banner de démarrage.
+raf@RafOS:~$ clear
+about
+Affiche les informations sur RafOS.
+raf@RafOS:~$ about
+
+RafOS - Custom Operating System
+Version: 1.0
+Author: Raf
+Built with: GCC, NASM, Python
+Architecture: x86 (32-bit)
+uptime
+Affiche les informations système.
+raf@RafOS:~$ uptime
+
+System Information:
+  CPU: x86 (32-bit)
+  Memory: 640 KB conventional
+  Video: VGA text mode 80x25
+  Keyboard: PS/2
+echo <texte>
+Répète le texte saisi après la commande.
+raf@RafOS:~$ echo Hello World!
+  Hello World!
+reboot
+Réinitialise le shell (efface l'écran et redémarre l'interface).
+raf@RafOS:~$ reboot
+Rebooting RafOS...
+
+🏗️ Architecture
+Vue d'ensemble
+┌─────────────────────────────────────────┐
+│           RafOS Architecture            │
+├─────────────────────────────────────────┤
+│  Kernel (kernel.c)                      │
+│  ├─ Shell & Command Parser              │
+│  └─ Main Loop                           │
+├─────────────────────────────────────────┤
+│  Drivers                                │
+│  ├─ Screen Driver (VGA text mode)       │
+│  └─ Keyboard Driver (PS/2)              │
+├─────────────────────────────────────────┤
+│  LibC                                   │
+│  └─ String utilities (strcmp, strlen)   │
+├─────────────────────────────────────────┤
+│  CPU                                    │
+│  └─ Port I/O (in/out instructions)      │
+├─────────────────────────────────────────┤
+│  Boot                                   │
+│  ├─ Bootloader (Real Mode)              │
+│  ├─ GDT Setup                           │
+│  ├─ Protected Mode Switch               │
+│  └─ Kernel Entry Point                  │
+└─────────────────────────────────────────┘
+Processus de démarrage
+1. BIOS charge le bootloader (boot_sect.asm) à 0x7c00
+2. Bootloader charge le kernel depuis le disque
+3. Configuration de la GDT (Global Descriptor Table)
+4. Passage en mode protégé 32-bit
+5. Saut vers kernel_main()
+6. Initialisation des drivers (screen, keyboard)
+7. Affichage du banner et lancement du shell
+Mode protégé 32-bit
+RafOS utilise le mode protégé avec :
+
+Segmentation : Code segment (CS) et Data segment (DS)
+Pas de pagination : Adressage direct en mémoire
+Pas d'interruptions : Polling du clavier via port I/O
+
+
+📂 Structure du projet
+rafOS/
 │
-├── 🧠 kernel/
-│   ├── kernel.c               # Main kernel
-│   ├── kernel_entry.asm       # 32-bit entry point
-│   └── util.c                 # Helpers / libc subset
+├── boot/                      # Bootloader et fichiers de démarrage
+│   ├── boot_sect.asm          # Secteur de boot principal
+│   ├── kernel_entry.asm       # Point d'entrée du kernel
+│   ├── print_string.asm       # Affichage en mode réel (16-bit)
+│   ├── print_string_pm.asm    # Affichage en mode protégé (32-bit)
+│   ├── disk_load.asm          # Chargement depuis disque (BIOS)
+│   ├── gdt.asm                # Global Descriptor Table
+│   └── switch_to_pm.asm       # Passage en mode protégé
 │
-├── 🔌 drivers/
-│   ├── ports.[ch]             # I/O operations
-│   ├── screen.[ch]            # VGA driver
-│   ├── keyboard.[ch]          # PS/2 driver
-│   └── timer.[ch]             # PIT driver
+├── kernel/                    # Kernel principal
+│   └── kernel.c               # Point d'entrée C, shell, commandes
 │
-├── ⚡ cpu/
-│   ├── gdt.[ch|asm]           # GDT setup
-│   ├── idt.[ch|asm]           # IDT setup
-│   ├── isr.[ch|asm]           # Interrupts
-│   └── timer.[ch]             # CPU timer config
+├── drivers/                   # Drivers matériels
+│   ├── screen.h               # Header du driver écran
+│   ├── screen.c               # Driver VGA text mode
+│   ├── keyboard.h             # Header du driver clavier
+│   └── keyboard.c             # Driver clavier PS/2
 │
-├── 📖 libc/
-│   ├── mem.[ch]               # memcpy, memset
-│   ├── string.[ch]            # strlen, strcmp
-│   └── function.h             # Utility macros
+├── cpu/                       # Interactions CPU bas niveau
+│   ├── ports.h                # Header pour I/O ports
+│   └── ports.c                # Instructions IN/OUT
 │
-├── 🔧 Makefile
-└── 📄 README.md
+├── libc/                      # Bibliothèque C minimaliste
+│   ├── string.h               # Header utilitaires chaînes
+│   └── string.c               # strcmp, strlen, strcpy, etc.
+│
+├── build.py                   # Script Python de compilation
+└── README.md                  # Ce fichier
+Détail des fichiers clés
+boot/boot_sect.asm
+Bootloader chargé par le BIOS. Charge le kernel, configure la GDT et passe en mode protégé.
+kernel/kernel.c
+Cœur de RafOS : boucle principale, parser de commandes, shell interactif.
+drivers/screen.c
+Gère l'affichage VGA : écriture en mémoire vidéo (0xB8000), scrolling, curseur.
+drivers/keyboard.c
+Lit les scancodes du clavier (port 0x60), les convertit en ASCII (QWERTY).
+cpu/ports.c
+Fonctions port_byte_in() et port_byte_out() pour interagir avec les ports I/O.
+libc/string.c
+Fonctions utilitaires : strcmp(), strlen(), strcpy(), strncmp().
+build.py
+Script automatisé de compilation (NASM + GCC + LD) et lancement QEMU.
+
+🛠️ Développement
+Ajouter une nouvelle commande
+
+Éditer kernel/kernel.c
+
+void cmd_macommande() {
+    print("Ma nouvelle commande !\n");
+}
+
+Ajouter dans process_command()
+
+else if (strcmp(input_buffer, "macommande") == 0) {
+    cmd_macommande();
+}
+
+Recompiler et tester
+
+./build.py all
+Modifier les couleurs
+Dans drivers/screen.h, vous pouvez changer les couleurs :
+#define WHITE_ON_BLACK 0x0f
+#define RED_ON_BLACK 0x04
+#define GREEN_ON_BLACK 0x02
+#define CYAN_ON_BLACK 0x0b
+#define YELLOW_ON_BLACK 0x0e
+Format : 0xBF où B = couleur de fond, F = couleur du texte
 
 
-🔄 How It Works
-pgsql
-Copier le code
-┌───────────────────────────────────────────────────────┐
-│                   BOOT SEQUENCE                       │
-└───────────────────────────────────────────────────────┘
+
+Code
+Couleur
 
 
-💾 BIOS loads bootloader (sector 0)
 
-🥾 Bootloader (16-bit) loads kernel, enables A20, enters Protected Mode
+0
+Noir
 
-🧠 Kernel (32-bit) sets up GDT / IDT, drivers, interrupts
 
-⚙️ Main Loop handles keyboard, timer, and VGA output
+1
+Bleu
 
-🎯 Roadmap
-Phase	Goal	Status
-🥾 Phase 1: Boot & Protected Mode	Bootloader, kernel load, GDT	✅ Done
-⚙️ Phase 2: Interrupts & Drivers	IDT, ISRs, IRQs, VGA, keyboard, timer	✅ Done
-💾 Phase 3: Memory Management	Paging, heap, allocator	🟡 In progress
-💬 Phase 4: Shell Interface	Command interpreter, history, UI	🔜 Planned
-📁 Phase 5: File System	FAT12, file ops, directories	🔜 Future
-🧩 Phase 6: Multitasking	Scheduler, context switching	🔜 Future
 
-📚 Learning Resources
-📖 Must-Reads
-OSDev Wiki — The OS development bible
+2
+Vert
 
-Intel x86 Manuals
 
-Bran’s Kernel Tutorial
+3
+Cyan
 
-🎥 Videos
-Writing an OS from Scratch (YouTube series)
 
-OSDev Series — step-by-step build guides
+4
+Rouge
 
-📘 Books
-Operating Systems: Design and Implementation — A. S. Tanenbaum
 
-Modern Operating Systems — A. S. Tanenbaum
+5
+Magenta
 
-Operating System Concepts — Silberschatz, Galvin, Gagne
 
-🧩 Debugging (GDB)
-bash
-Copier le code
-# Terminal 1: run QEMU in debug mode
-make debug
+6
+Marron
 
-# Terminal 2: connect GDB
-gdb kernel.elf
+
+7
+Gris clair
+
+
+8
+Gris foncé
+
+
+9
+Bleu clair
+
+
+A
+Vert clair
+
+
+B
+Cyan clair
+
+
+C
+Rouge clair
+
+
+D
+Magenta clair
+
+
+E
+Jaune
+
+
+F
+Blanc
+
+
+Passer en AZERTY
+Dans drivers/keyboard.c, modifier le tableau scancode_to_ascii :
+// Exemple : remplacer 'q' par 'a', 'a' par 'q', etc.
+static char scancode_to_ascii[128] = {
+    0,  27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '=', '\b',
+    '\t', 'a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^', '$', '\n',
+    0, 'q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'u', '*',
+    // ... adapter selon clavier AZERTY
+};
+Débugger avec GDB
+# Terminal 1 : Lancer QEMU en mode debug
+qemu-system-i386 -drive file=os-image.bin,format=raw,if=floppy -boot a -s -S
+
+# Terminal 2 : Lancer GDB
+gdb
 (gdb) target remote localhost:1234
 (gdb) break kernel_main
 (gdb) continue
-Command	Description
-break kernel_main	Set breakpoint
-continue	Resume execution
-step / next	Step into / over
-info registers	Show registers
-x/16x $esp	Examine stack
 
-🤝 Contributing
-[!TIP]
-Contributions are welcome — bugs, docs, or new features.
+🐛 Dépannage
+Erreur : "gcc: command not found"
+# Ubuntu/Debian
+sudo apt install build-essential gcc-multilib
 
-How to Contribute
-bash
-Copier le code
-# Fork the repo
-git checkout -b feature/amazing-feature
-# Make changes
-git commit -m "Add amazing feature"
-git push origin feature/amazing-feature
-# Open a Pull Request
-Ideas
-🐛 Fix bugs • 📝 Improve docs • ✨ Add features • 🧪 Write tests • 🎨 Enhance UI • 🌍 Translate content
+# Arch Linux
+sudo pacman -S base-devel
+
+# macOS
+xcode-select --install
+Erreur : "nasm: command not found"
+# Ubuntu/Debian
+sudo apt install nasm
+
+# Arch Linux
+sudo pacman -S nasm
+
+# macOS
+brew install nasm
+Erreur : "qemu-system-i386: command not found"
+# Ubuntu/Debian
+sudo apt install qemu-system-x86
+
+# Arch Linux
+sudo pacman -S qemu-system-x86
+
+# macOS
+brew install qemu
+Erreur : "fatal error: sys/cdefs.h: No such file or directory"
+Vous devez installer le support 32-bit pour GCC :
+# Ubuntu/Debian
+sudo apt install gcc-multilib g++-multilib
+
+# Fedora
+sudo dnf install glibc-devel.i686 libgcc.i686
+Le clavier ne répond pas dans QEMU
+
+Vérifiez que la fenêtre QEMU a le focus
+Cliquez dans la fenêtre QEMU avant de taper
+Essayez Ctrl+Alt+G pour capturer/relâcher la souris
+
+L'écran reste noir
+
+Vérifiez que os-image.bin existe et fait plus de 512 octets
+Recompilez avec ./build.py clean puis ./build.py
+Vérifiez les logs dans le terminal
+
+Caractères bizarres à l'écran
+
+Problème de conversion scancode → ASCII
+Vérifiez votre layout clavier (QWERTY vs AZERTY)
+Le driver clavier est configuré en QWERTY par défaut
 
 
+🤝 Contribuer
+Les contributions sont les bienvenues ! Voici comment participer :
 
-📊 Stats
-Metric	Value
-Lines of Code	~2 000 +
-Files	25 +
-Bootloader Size	512 bytes
-Kernel Size	~50 KB
-Resolution	80×25 text
-Colors	16
+Fork le projet
+Créer une branche (git checkout -b feature/MaFeature)
+Commit vos changements (git commit -m 'Ajout de MaFeature')
+Push vers la branche (git push origin feature/MaFeature)
+Ouvrir une Pull Request
+
+Idées de contributions
+
+🎨 Améliorer l'interface (couleurs, ASCII art)
+📝 Ajouter des commandes (ls, cat, mkdir)
+💾 Implémenter un système de fichiers simple
+⏰ Ajouter une horloge système (PIT)
+🖱️ Support de la souris PS/2
+🔊 Driver son (PC Speaker)
+🌐 Support réseau basique
 
 
+📚 Ressources
+Documentation
 
-📄 License
-This project is licensed under the MIT License — see LICENSE for details.
+OSDev Wiki - Référence complète sur le développement d'OS
+Intel x86 Manual - Documentation officielle CPU
+NASM Documentation - Manuel de l'assembleur NASM
 
-🙏 Acknowledgments
-💙 OSDev Community — invaluable documentation
-🎓 Bran Kernighan — inspiration for countless devs
-🔥 Linus Torvalds — proof it can be done
-☕ Coffee — the real scheduler behind this project
+Tutoriels
 
-```
+Writing a Simple Operating System from Scratch - PDF complet
+Bran's Kernel Development - Tutoriel classique
+JamesM's Kernel Tutorial - Tutoriel avancé
 
-🌟 Star History
-<div align="center"> <img src="https://api.star-history.com/svg?repos=rafael12g/rafOS&type=Date" alt="Star History Chart" /> </div>
+Livres
+
+Operating Systems: Three Easy Pieces (gratuit en ligne)
+Modern Operating Systems - Andrew S. Tanenbaum
+Operating System Concepts - Abraham Silberschatz
+
+
+📄 Licence
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+MIT License
+
+Copyright (c) 2024 Raf
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+👤 Auteur
+Raf
+
+GitHub: @votre-username
+Email: votre-email@example.com
+
+
+🌟 Remerciements
+
+OSDev Community pour la documentation et les ressources
+QEMU pour l'émulateur performant
+NASM pour l'assembleur open-source
+Tous les contributeurs du projet
+
+
+📊 Statistiques
+
+Lignes de code : ~1000
+Taille de l'OS : ~15 KB
+Temps de boot : < 1 seconde
+Langages : C (60%), Assembly (40%)
+
+
 <div align="center">
-💻 Made with ☕ and countless debug sessions
-If this project helped you, please consider giving it a ⭐
-<br><br>
-Report Bug • Request Feature • Back to Top
 
+RafOS - Made with ❤️ by Raf
+⭐ Star ce projet si vous le trouvez utile !
 </div>
