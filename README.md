@@ -258,8 +258,8 @@ MIT License – voir LICENSE
 
 👤 Auteur
 Raf
-GitHub: @votre-username
-Email: votre-email@example.com
+GitHub: @rafael12g
+Email: 0565ara12@gmail.com
 
 🌟 Remerciements
 OSDev Community
@@ -268,7 +268,7 @@ QEMU
 
 NASM
 
-Tous les contributeurs
+Tous les contributeurs (dédicace a perssone je me suis fait seul)
 
 📊 Statistiques
 Lignes de code : ~1000
@@ -278,5 +278,11 @@ Taille OS : ~15 KB
 Temps de boot : < 1 seconde
 
 Langages : C (60%), Assembly (40%)
+
+RAM : 64mB  recommandé : 128mB
+
+CPU : une patate
+
+```
 
 <div align="center"> RafOS - Made with ❤️ by Raf ⭐ Star ce projet si vous le trouvez utile ! </div> ```
