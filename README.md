@@ -94,7 +94,7 @@ Il démarre depuis un **bootloader custom**, passe en **mode protégé 32-bit** 
 
 ## 📦 Installation
 
-### Ubuntu/Debian
+### Ubuntu / Debian
 ```bash
 sudo apt update
 sudo apt install -y build-essential nasm qemu-system-x86 python3
@@ -114,7 +114,7 @@ bash
 Copier le code
 brew install nasm qemu python3
 brew install i686-elf-gcc
-Vérifiez l'installation :
+Vérifier l'installation :
 
 bash
 Copier le code
@@ -122,8 +122,6 @@ gcc --version
 nasm --version
 qemu-system-i386 --version
 python3 --version
-
-
 🚀 Compilation
 Cloner le projet :
 
@@ -138,10 +136,9 @@ Copier le code
 ./build.py        # Compilation simple
 ./build.py clean  # Nettoyer et recompiler
 ./build.py all    # Compiler et lancer directement
-Vérifier la compilation :
-Un fichier os-image.bin (~10-20 KB) doit être créé.
+Un fichier os-image.bin (~10-20 KB) sera créé.
 
-Pour lancer :
+Pour lancer RafOS :
 
 bash
 Copier le code
@@ -149,27 +146,26 @@ Copier le code
 ./build.py all    # Compiler et lancer
 🎮 Utilisation
 Shell interactif
+
 text
 Copier le code
 raf@RafOS:~$ help
-Entrée : Exécuter la commande
+Raccourcis clavier :
+
+Enter : Exécuter la commande
 
 Backspace : Effacer le dernier caractère
 
-Ctrl+C dans le terminal : Quitter QEMU
+Ctrl+C : Quitter QEMU
 
 📖 Commandes disponibles
-help : Liste des commandes
-
-clear : Efface l’écran et réaffiche le banner
-
-about : Infos sur RafOS
-
-uptime : Infos système
-
-echo <texte> : Affiche le texte
-
-reboot : Redémarre le shell
+Commande	Description
+help	Liste des commandes
+clear	Efface l’écran et réaffiche le banner
+about	Infos sur RafOS
+uptime	Infos système
+echo <texte>	Affiche le texte
+reboot	Redémarre le shell
 
 🏗️ Architecture
 mathematica
@@ -196,7 +192,8 @@ RafOS Architecture
 │ ├─ Protected Mode Switch    │
 │ └─ Kernel Entry Point       │
 └─────────────────────────────┘
-Processus de démarrage
+Processus de démarrage :
+
 BIOS charge le bootloader
 
 Bootloader charge le kernel
@@ -223,13 +220,13 @@ rafOS/
 ├── build.py       # Script Python de compilation
 └── README.md      # Ce fichier
 🛠️ Développement
-Ajouter une commande : éditer kernel/kernel.c et ajouter dans process_command()
+Ajouter une commande : éditer kernel/kernel.c et ajouter dans process_command().
 
-Modifier les couleurs : drivers/screen.h
+Modifier les couleurs : éditer drivers/screen.h.
 
-Passer en AZERTY : modifier le tableau scancode_to_ascii dans drivers/keyboard.c
+Passer en AZERTY : modifier le tableau scancode_to_ascii dans drivers/keyboard.c.
 
-Debugger : lancer QEMU avec -s -S et utiliser GDB
+Debugger : lancer QEMU avec -s -S et utiliser GDB.
 
 🐛 Dépannage
 Commande non trouvée → installer le package manquant (gcc, nasm, qemu)
@@ -239,24 +236,12 @@ Commande non trouvée → installer le package manquant (gcc, nasm, qemu)
 Clavier ne répond pas → cliquer dans QEMU, Ctrl+Alt+G
 
 🖥️ Configuration minimale et recommandée
-Processeur
-Minimum : CPU x86 (32-bit ou 64-bit) compatible QEMU/VirtualBox
+Élément	Minimum	Recommandé
+Processeur	CPU x86 32/64-bit compatible	CPU moderne avec VT-x / AMD-V
+RAM	64 MB	128 MB ou plus
+Stockage	Quelques Mo (~15-20 KB)	Même
 
-Recommandé : Processeur moderne avec VT-x / AMD-V
-
-Exemple : Intel Core i3 / AMD Ryzen 3 ou équivalent (une patate suffit)
-
-RAM
-Minimum : 64 MB
-
-Recommandé : 128 MB ou plus
-
-RafOS utilise ~640 KB de mémoire conventionnelle
-
-Le reste est pour l’émulateur et le système hôte
-
-Stockage
-Quelques Mo suffisent (~15-20 KB)
+RafOS utilise ~640 KB de mémoire conventionnelle, le reste pour l’émulateur et le système hôte.
 
 🤝 Contribuer
 Forker le projet
@@ -269,14 +254,15 @@ Push : git push origin feature/MaFeature
 
 Ouvrir une Pull Request
 
-Idées de contribution
+Idées de contribution :
+
 Améliorer l’interface
 
 Ajouter des commandes (ls, cat, mkdir)
 
 Implémenter un système de fichiers
 
-Ajouter horloge système (PIT), souris PS/2, son, réseau
+Ajouter horloge, souris PS/2, son, réseau
 
 📄 Licence
 MIT License – voir LICENSE
@@ -293,8 +279,6 @@ QEMU
 
 NASM
 
-Tous les contributeurs (aucun juste moi)
-
 📊 Statistiques
 Lignes de code : ~1000
 
@@ -303,7 +287,5 @@ Taille OS : ~15 KB
 Temps de boot : < 1 seconde
 
 Langages : C (60%), Assembly (40%)
-
-```
 
 <div align="center"> RafOS - Made with ❤️ by Raf ⭐ Star ce projet si vous le trouvez utile ! </div> ```
