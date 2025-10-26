@@ -2,12 +2,7 @@
 
 <div align="center">
 
-  ____       __  ___  _____ 
- |  _ \ __ _ / _|/ _ \/ ____|
- | |_) / _` | |_| | | (___  
- |  _ < (_| |  _| |_| |\___ \
- |_| \_\__,_|_|  \___/ ____)_|
-                      |_____/ 
+<img width="773" height="525" alt="rafOS" src="https://github.com/user-attachments/assets/a12d0546-73db-4947-9565-cf016e7e3a3b" />
 
 Un système d'exploitation minimaliste x86 32-bit avec shell interactif
 
@@ -16,13 +11,6 @@ Un système d'exploitation minimaliste x86 32-bit avec shell interactif
 [![Language](https://img.shields.io/badge/language-C%20%2B%20ASM-orange.svg)]()
 
 </div>
-
-
-
-
-<img width="719" height="467" alt="1erimg_customOS" src="https://github.com/user-attachments/assets/44ec7c5b-918f-4aa3-b5dd-2e35ce964389" />
-
-
 
 
 
