@@ -123,7 +123,7 @@ gcc --version
 nasm --version
 qemu-system-i386 --version
 python3 --version
-```
+
 
 🚀 Compilation
 Cloner le projet :
