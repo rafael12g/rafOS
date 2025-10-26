@@ -123,12 +123,14 @@ gcc --version
 nasm --version
 qemu-system-i386 --version
 python3 --version
+```
+
 🚀 Compilation
 Cloner le projet :
 
 bash
 Copier le code
-git clone https://github.com/votre-username/rafOS.git
+git clone https://github.com/rafael12g/rafOS.git
 cd rafOS
 Compiler RafOS :
 
@@ -243,7 +245,7 @@ Minimum : CPU x86 (32-bit ou 64-bit) compatible QEMU/VirtualBox
 
 Recommandé : Processeur moderne avec VT-x / AMD-V
 
-Exemple : Intel Core i3 / AMD Ryzen 3 ou équivalent
+Exemple : Intel Core i3 / AMD Ryzen 3 ou équivalent (une patate suffit)
 
 RAM
 Minimum : 64 MB
@@ -282,8 +284,8 @@ MIT License – voir LICENSE
 
 👤 Auteur
 Raf
-GitHub: @votre-username
-Email: votre-email@example.com
+GitHub: @rafael12g
+Email: 0565rara12@gmail.com
 
 🌟 Remerciements
 OSDev Community
@@ -292,7 +294,7 @@ QEMU
 
 NASM
 
-Tous les contributeurs
+Tous les contributeurs (aucun juste moi)
 
 📊 Statistiques
 Lignes de code : ~1000
