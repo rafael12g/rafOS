@@ -156,6 +156,36 @@ shell:
     call strcmp
     jz do_reboot
     
+    mov si, cmd_buffer
+    mov di, cmd_fortune
+    call strcmp
+    jz do_fortune
+    
+    mov si, cmd_buffer
+    mov di, cmd_date
+    call strcmp
+    jz do_date
+    
+    mov si, cmd_buffer
+    mov di, cmd_uptime
+    call strcmp
+    jz do_uptime
+    
+    mov si, cmd_buffer
+    mov di, cmd_color
+    call strcmp
+    jz do_color
+    
+    mov si, cmd_buffer
+    mov di, cmd_snake
+    call strcmp
+    jz do_snake
+    
+    mov si, cmd_buffer
+    mov di, cmd_guess
+    call strcmp
+    jz do_guess
+    
     cmp byte [cmd_buffer], 0
     je shell
     
@@ -327,6 +357,33 @@ do_help:
     call print
     call nl
     mov si, help_reboot
+    call print
+    call nl
+    call nl
+    
+    ; Addons
+    mov byte [color], 0x0B
+    mov si, help_cat_addons
+    call print
+    call nl
+    mov byte [color], 0x0F
+    
+    mov si, help_fortune
+    call print
+    call nl
+    mov si, help_date
+    call print
+    call nl
+    mov si, help_uptime
+    call print
+    call nl
+    mov si, help_color
+    call print
+    call nl
+    mov si, help_snake
+    call print
+    call nl
+    mov si, help_guess
     call print
     call nl
     call nl
@@ -732,6 +789,30 @@ do_reboot:
     call nl
     call delay
     jmp 0xFFFF:0x0000
+
+do_fortune:
+    call show_fortune
+    jmp shell
+
+do_date:
+    call show_date
+    jmp shell
+
+do_uptime:
+    call show_uptime
+    jmp shell
+
+do_color:
+    call change_color
+    jmp shell
+
+do_snake:
+    call game_snake
+    jmp shell
+
+do_guess:
+    call game_guess
+    jmp shell
 
 text_editor:
     call clear
@@ -1344,6 +1425,259 @@ play_beep:
     call nl
     ret
 
+show_fortune:
+    call nl
+    
+    ; Simple pseudo-random using time
+    mov ah, 0x00
+    int 0x1A
+    mov ax, dx
+    xor dx, dx
+    mov bx, 8
+    div bx
+    
+    ; DX now contains 0-7
+    cmp dx, 0
+    je .q0
+    cmp dx, 1
+    je .q1
+    cmp dx, 2
+    je .q2
+    cmp dx, 3
+    je .q3
+    cmp dx, 4
+    je .q4
+    cmp dx, 5
+    je .q5
+    cmp dx, 6
+    je .q6
+    jmp .q7
+    
+.q0:
+    mov si, fortune_0
+    jmp .show
+.q1:
+    mov si, fortune_1
+    jmp .show
+.q2:
+    mov si, fortune_2
+    jmp .show
+.q3:
+    mov si, fortune_3
+    jmp .show
+.q4:
+    mov si, fortune_4
+    jmp .show
+.q5:
+    mov si, fortune_5
+    jmp .show
+.q6:
+    mov si, fortune_6
+    jmp .show
+.q7:
+    mov si, fortune_7
+    
+.show:
+    call print
+    call nl
+    call nl
+    ret
+
+show_date:
+    call nl
+    mov si, msg_date
+    call print
+    
+    ; Get date from BIOS
+    mov ah, 0x04
+    int 0x1A
+    
+    ; CH = century (BCD), CL = year (BCD)
+    ; DH = month (BCD), DL = day (BCD)
+    
+    mov al, dh
+    call print_hex
+    mov al, '/'
+    call printchar
+    
+    mov al, dl
+    call print_hex
+    mov al, '/'
+    call printchar
+    
+    mov al, ch
+    call print_hex
+    mov al, cl
+    call print_hex
+    call nl
+    call nl
+    ret
+
+show_uptime:
+    call nl
+    mov si, msg_uptime
+    call print
+    
+    ; Get time ticks
+    mov ah, 0x00
+    int 0x1A
+    
+    ; DX:CX = ticks since midnight (18.2 ticks/sec)
+    ; Convert to seconds
+    mov ax, cx
+    mov bx, 18
+    xor dx, dx
+    div bx
+    
+    ; AX = approximate seconds
+    call num2str
+    mov si, numbuf
+    call print
+    mov si, msg_seconds
+    call print
+    call nl
+    call nl
+    ret
+
+change_color:
+    mov si, arg1
+    cmp byte [si], 0
+    je .show_help
+    
+    ; Parse color number
+    call str2num
+    test ax, ax
+    jz .show_help
+    
+    cmp ax, 15
+    jg .show_help
+    
+    mov [color], al
+    call nl
+    mov si, msg_color_changed
+    call print
+    call nl
+    call nl
+    jmp .done
+    
+.show_help:
+    call nl
+    mov si, msg_color_help
+    call print
+    call nl
+    mov si, msg_color_list
+    call print
+    call nl
+    call nl
+    
+.done:
+    ret
+
+game_snake:
+    call clear
+    call nl
+    mov si, msg_snake_title
+    call print
+    call nl
+    call nl
+    mov si, msg_snake_info
+    call print
+    call nl
+    call nl
+    mov si, msg_snake_start
+    call print
+    call nl
+    
+    ; Simple snake demo
+    mov cx, 10
+.snake_loop:
+    push cx
+    mov si, snake_body
+    call print
+    call short_delay
+    pop cx
+    loop .snake_loop
+    
+    call nl
+    call nl
+    mov si, msg_snake_end
+    call print
+    call nl
+    call nl
+    mov si, msg_press_key
+    call print
+    call getchar
+    call clear
+    ret
+
+game_guess:
+    call clear
+    call nl
+    mov si, msg_guess_title
+    call print
+    call nl
+    call nl
+    
+    ; Generate random number 1-10
+    mov ah, 0x00
+    int 0x1A
+    mov ax, dx
+    xor dx, dx
+    mov bx, 10
+    div bx
+    inc dx          ; DX = 1-10
+    mov [secret_num], dx
+    
+    mov si, msg_guess_info
+    call print
+    call nl
+    call nl
+    
+    mov word [guess_count], 0
+    
+.guess_loop:
+    mov si, msg_guess_prompt
+    call print
+    call getline_simple
+    call str2num
+    
+    inc word [guess_count]
+    
+    cmp ax, [secret_num]
+    je .won
+    jl .too_low
+    
+.too_high:
+    mov si, msg_too_high
+    call print
+    call nl
+    jmp .guess_loop
+    
+.too_low:
+    mov si, msg_too_low
+    call print
+    call nl
+    jmp .guess_loop
+    
+.won:
+    call nl
+    mov si, msg_guess_won
+    call print
+    call nl
+    mov si, msg_guess_tries
+    call print
+    mov ax, [guess_count]
+    call num2str
+    mov si, numbuf
+    call print
+    call nl
+    call nl
+    mov si, msg_press_key
+    call print
+    call getchar
+    call clear
+    ret
+
 boot_animation:
     mov si, anim_load
     call print
@@ -1621,6 +1955,12 @@ cmd_mem: db 'mem', 0
 cmd_beep: db 'beep', 0
 cmd_about: db 'about', 0
 cmd_reboot: db 'reboot', 0
+cmd_fortune: db 'fortune', 0
+cmd_date: db 'date', 0
+cmd_uptime: db 'uptime', 0
+cmd_color: db 'color', 0
+cmd_snake: db 'snake', 0
+cmd_guess: db 'guess', 0
 
 help_title: db '=== RafOS v2.0 - HELP ===', 0
 help_line: db '================================', 0
@@ -1655,6 +1995,14 @@ help_beep: db '  beep          Play sound', 0
 help_about: db '  about         About RafOS', 0
 help_clear: db '  clear         Clear screen', 0
 help_reboot: db '  reboot        Reboot system', 0
+
+help_cat_addons: db '[Addons]', 0
+help_fortune: db '  fortune       Random quote', 0
+help_date: db '  date          Show date', 0
+help_uptime: db '  uptime        Show uptime', 0
+help_color: db '  color [0-15]  Change text color', 0
+help_snake: db '  snake         Snake game demo', 0
+help_guess: db '  guess         Number guessing game', 0
 
 help_tips: db '[Navigation Tips]', 0
 help_tip1: db '  Up/Down arrows   Navigate history', 0
@@ -1709,6 +2057,40 @@ msg_beep: db 'Beeping...', 0
 msg_done: db 'Done!', 0
 msg_reboot: db 'Rebooting...', 0
 
+; Fortune messages
+fortune_0: db 'Think different, code better!', 0
+fortune_1: db 'The best way to predict the future is to invent it.', 0
+fortune_2: db 'Good code is its own best documentation.', 0
+fortune_3: db 'Simplicity is the ultimate sophistication.', 0
+fortune_4: db 'Make it work, make it right, make it fast.', 0
+fortune_5: db 'Programs must be written for people to read.', 0
+fortune_6: db 'Keep it simple, keep it smart!', 0
+fortune_7: db 'Every expert was once a beginner.', 0
+
+; New addon messages
+msg_date: db 'Date: ', 0
+msg_uptime: db 'Uptime: ', 0
+msg_seconds: db ' seconds', 0
+msg_color_changed: db 'Text color changed!', 0
+msg_color_help: db 'Usage: color [0-15]', 0
+msg_color_list: db '0=Black 1=Blue 2=Green 3=Cyan 4=Red 5=Magenta', 13, 10
+    db '6=Brown 7=Gray 8=DkGray 9=LtBlue 10=LtGreen', 13, 10
+    db '11=LtCyan 12=LtRed 13=LtMagenta 14=Yellow 15=White', 0
+
+msg_snake_title: db '=== SNAKE GAME (Demo) ===', 0
+msg_snake_info: db 'This is a simple snake animation demo.', 0
+msg_snake_start: db 'Watch the snake move...', 0
+msg_snake_end: db 'Game Over! Thanks for playing!', 0
+snake_body: db '>>===>', 0
+
+msg_guess_title: db '=== NUMBER GUESSING GAME ===', 0
+msg_guess_info: db 'I am thinking of a number between 1 and 10.', 0
+msg_guess_prompt: db 'Your guess: ', 0
+msg_guess_won: db 'Congratulations! You won!', 0
+msg_guess_tries: db 'Number of tries: ', 0
+msg_too_high: db 'Too high! Try again.', 0
+msg_too_low: db 'Too low! Try again.', 0
+
 str_root: db '/', 0
 str_user_def: db 'user', 0
 str_host_def: db 'rafos', 0
@@ -1729,6 +2111,8 @@ file_count: dw 0
 num1: dw 0
 num2: dw 0
 operator: db 0
+secret_num: dw 0
+guess_count: dw 0
 
 current_dir: times 32 db 0
 env_user: times 16 db 0

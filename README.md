@@ -50,6 +50,14 @@ RafOS est un OS minimaliste mais fonctionnel qui tourne directement sur le maté
 - Générateur de sons (beep)
 - Animation de boot
 
+### 🎮 Addons
+- Fortune (citations aléatoires)
+- Date système (affichage formaté)
+- Uptime (temps de fonctionnement)
+- Color (changement de couleur du texte)
+- Snake (démo de jeu)
+- Guess (jeu de devinettes)
+
 ---
 
 ## 📦 Installation
@@ -212,6 +220,38 @@ Redémarrer
 
 help
 Aide complète
+
+
+Addons
+
+
+
+Commande
+Description
+
+
+fortune
+Citation aléatoire inspirante
+
+
+date
+Afficher la date système
+
+
+uptime
+Temps de fonctionnement
+
+
+color
+Changer la couleur du texte (0-15)
+
+
+snake
+Jeu Snake (animation démo)
+
+
+guess
+Jeu de devinettes (1-10)
 
 
 Raccourcis clavier
