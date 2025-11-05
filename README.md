@@ -110,6 +110,10 @@ qemu-system-i386 -fda rafos.img
 
 #### Depuis l'ISO
 ```bash
+# Option 1: Script automatique
+./run-iso.sh
+
+# Option 2: Commande directe
 qemu-system-i386 -cdrom rafos.iso
 ```
 
@@ -308,13 +312,14 @@ ESC : Sauvegarder (dans l'éditeur)
 rafOS/
 ├── boot.asm          # Bootloader (512 bytes)
 ├── kernel.asm        # Kernel principal (15 KB)
-├── boot.bin          # Bootloader compilé
-├── kernel.bin        # Kernel compilé
-├── rafos.img         # Image disque floppy (1.44 MB)
-├── rafos.iso         # Image ISO bootable (généré par build-iso.sh)
 ├── build.sh          # Script de compilation
 ├── build-iso.sh      # Script de création ISO
-└── run.sh            # Script de lancement QEMU
+├── run.sh            # Script de lancement QEMU (floppy)
+├── run-iso.sh        # Script de lancement QEMU (ISO)
+├── boot.bin          # Bootloader compilé (généré)
+├── kernel.bin        # Kernel compilé (généré)
+├── rafos.img         # Image disque floppy (généré)
+└── rafos.iso         # Image ISO bootable (généré)
 Architecture
 
 Bootloader : Charge le kernel en mémoire à 0x1000:0x0000
