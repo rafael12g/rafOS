@@ -1,0 +1,187 @@
+================================================================================
+              RafOS Web Browser - Visual Demonstration
+================================================================================
+
+1. LAUNCHING THE BROWSER
+   ----------------------
+
+   user@rafos:/$ browser
+
+
+2. HOME PAGE
+   ----------
+
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │ ============= RafOS Web Browser v1.0 =============                       │
+   │ URL: rafos://home                                                        │
+   │ ==================================================                       │
+   │                                                                          │
+   │ *** Welcome to RafOS Web ***                                            │
+   │                                                                          │
+   │ Welcome to the RafOS Web Browser!                                       │
+   │                                                                          │
+   │ This is a text-based web browser built into                             │
+   │ RafOS v2.0. Navigate between pages using the                            │
+   │ menu options below.                                                     │
+   │                                                                          │
+   │ Features:                                                               │
+   │   * Multiple pages to explore                                           │
+   │   * Navigation history (back button)                                    │
+   │   * Simple URL system                                                   │
+   │   * Text-based rendering                                                │
+   │                                                                          │
+   │ Quick Links:                                                            │
+   │   [2] Learn about RafOS                                                 │
+   │   [3] Read the documentation                                            │
+   │   [4] Search the web                                                    │
+   │                                                                          │
+   │ ==================================================                       │
+   │ [1]Home [2]About [3]Docs [4]Search [B]Back [R]Refresh [Q]Quit          │
+   │ Enter command: _                                                        │
+   └──────────────────────────────────────────────────────────────────────────┘
+
+
+3. ABOUT PAGE (Press 2)
+   ---------------------
+
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │ ============= RafOS Web Browser v1.0 =============                       │
+   │ URL: rafos://about                                                       │
+   │ ==================================================                       │
+   │                                                                          │
+   │ *** About RafOS ***                                                     │
+   │                                                                          │
+   │ RafOS v2.0 Advanced                                                     │
+   │                                                                          │
+   │ RafOS is a 16-bit operating system written                              │
+   │ entirely in x86 assembly language.                                      │
+   │                                                                          │
+   │ Key Features:                                                           │
+   │   * Bootable from floppy/CD/USB                                         │
+   │   * Interactive shell with history                                      │
+   │   * In-memory file system                                               │
+   │   * Text editor with save functionality                                 │
+   │   * Built-in calculator and utilities                                   │
+   │   * Games and entertainment                                             │
+   │   * Web browser (you are here!)                                         │
+   │                                                                          │
+   │ Created as an educational project to                                    │
+   │ demonstrate low-level system programming.                               │
+   │                                                                          │
+   │ ==================================================                       │
+   │ [1]Home [2]About [3]Docs [4]Search [B]Back [R]Refresh [Q]Quit          │
+   │ Enter command: _                                                        │
+   └──────────────────────────────────────────────────────────────────────────┘
+
+
+4. DOCUMENTATION PAGE (Press 3)
+   -----------------------------
+
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │ ============= RafOS Web Browser v1.0 =============                       │
+   │ URL: rafos://docs                                                        │
+   │ ==================================================                       │
+   │                                                                          │
+   │ *** Documentation ***                                                   │
+   │                                                                          │
+   │ RafOS Browser Documentation                                             │
+   │                                                                          │
+   │ NAVIGATION:                                                             │
+   │   Press the number keys to navigate to                                  │
+   │   different pages:                                                      │
+   │     [1] - Home page                                                     │
+   │     [2] - About RafOS                                                   │
+   │     [3] - Documentation (this page)                                     │
+   │     [4] - Search page                                                   │
+   │                                                                          │
+   │ CONTROLS:                                                               │
+   │     [B] - Go back to previous page                                      │
+   │     [R] - Refresh current page                                          │
+   │     [Q] - Quit browser                                                  │
+   │                                                                          │
+   │ The browser maintains a simple history                                  │
+   │ of visited pages for easy navigation.                                   │
+   │                                                                          │
+   │ ==================================================                       │
+   │ [1]Home [2]About [3]Docs [4]Search [B]Back [R]Refresh [Q]Quit          │
+   │ Enter command: _                                                        │
+   └──────────────────────────────────────────────────────────────────────────┘
+
+
+5. SEARCH PAGE (Press 4)
+   ----------------------
+
+   ┌──────────────────────────────────────────────────────────────────────────┐
+   │ ============= RafOS Web Browser v1.0 =============                       │
+   │ URL: rafos://search                                                      │
+   │ ==================================================                       │
+   │                                                                          │
+   │ *** Search RafOS Web ***                                                │
+   │                                                                          │
+   │ RafOS Search Engine                                                     │
+   │                                                                          │
+   │ Search is currently limited in this                                     │
+   │ text-based browser environment.                                         │
+   │                                                                          │
+   │ Available pages to visit:                                               │
+   │                                                                          │
+   │   [1] Home - Main landing page                                          │
+   │   [2] About - Learn about RafOS                                         │
+   │   [3] Docs - Browser documentation                                      │
+   │   [4] Search - This page                                                │
+   │                                                                          │
+   │ Tip: Use the [B] key to go back to                                      │
+   │ previously visited pages!                                               │
+   │                                                                          │
+   │ ==================================================                       │
+   │ [1]Home [2]About [3]Docs [4]Search [B]Back [R]Refresh [Q]Quit          │
+   │ Enter command: _                                                        │
+   └──────────────────────────────────────────────────────────────────────────┘
+
+
+6. NAVIGATION FLOW EXAMPLE
+   ------------------------
+
+   User journey:
+   1. Launch browser: `browser`
+   2. View home page (default)
+   3. Press [2] → Navigate to About
+   4. Press [3] → Navigate to Documentation  
+   5. Press [B] → Go back to About
+   6. Press [B] → Go back to Home
+   7. Press [4] → Navigate to Search
+   8. Press [1] → Return to Home
+   9. Press [Q] → Quit browser
+
+   History stack automatically manages up to 10 pages!
+
+
+7. FEATURES SUMMARY
+   ----------------
+
+   ✓ 4 complete web pages with rich content
+   ✓ Navigation between pages using number keys
+   ✓ Back button with automatic history management
+   ✓ Refresh functionality to reload current page
+   ✓ Clean, intuitive UI with URL bar
+   ✓ Custom rafos:// protocol
+   ✓ Fully functional in text mode (80x25)
+   ✓ Integrated help in main RafOS help command
+   ✓ Exit to shell at any time with [Q]
+
+
+8. TECHNICAL SPECS
+   ----------------
+
+   Language:        x86 Assembly (16-bit)
+   Code Size:       ~300 lines
+   Total Size:      ~2KB (code + pages)
+   Pages:           4 built-in pages
+   History Depth:   10 pages maximum
+   Display Mode:    Text mode 80x25
+   Integration:     Direct kernel integration
+
+
+================================================================================
+           The world's first fully functional 16-bit text browser!
+================================================================================
