@@ -20,6 +20,7 @@ RafOS est un OS minimaliste mais fonctionnel qui tourne directement sur le maté
 - Shell avec prompt coloré personnalisable
 - Système de fichiers en mémoire (10 fichiers max)
 - Éditeur de texte intégré
+- **Navigateur web textuel fonctionnel** 🌐
 - Historique de commandes (20 max)
 - Variables d'environnement
 - Calculatrice et utilitaires système
@@ -57,6 +58,7 @@ RafOS est un OS minimaliste mais fonctionnel qui tourne directement sur le maté
 - Color (changement de couleur du texte)
 - Snake (démo de jeu)
 - Guess (jeu de devinettes)
+- **Browser (navigateur web textuel)** 🌐
 
 ---
 
@@ -298,6 +300,35 @@ Jeu Snake (animation démo)
 guess
 Jeu de devinettes (1-10)
 
+
+browser
+Navigateur web textuel fonctionnel
+
+
+### 🌐 Navigateur Web
+
+Le navigateur web textuel intégré offre une expérience de navigation complète :
+
+**Fonctionnalités :**
+- Navigation entre plusieurs pages web
+- Système d'URL (rafos://)
+- Historique de navigation avec bouton retour
+- Interface utilisateur intuitive
+- 4 pages intégrées : Accueil, À propos, Documentation, Recherche
+
+**Commandes du navigateur :**
+- `1` : Page d'accueil
+- `2` : Page À propos
+- `3` : Documentation
+- `4` : Recherche
+- `B` : Retour (historique)
+- `R` : Rafraîchir la page
+- `Q` : Quitter le navigateur
+
+**Lancement :**
+```bash
+user@rafos:/$ browser
+```
 
 Raccourcis clavier
 
