@@ -1,0 +1,28 @@
+# RafOS Build Artifacts
+# Ignore compiled binaries and generated images
+
+# Compiled bootloader and kernel
+rafOS/boot.bin
+rafOS/kernel.bin
+
+# Generated disk images
+rafOS/rafos.img
+rafOS/rafos.iso
+
+# ISO build temporary directory
+rafOS/iso_build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor temporary files
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Backup files
+*.bak
+*.backup

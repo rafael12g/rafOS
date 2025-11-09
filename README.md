@@ -50,6 +50,14 @@ RafOS est un OS minimaliste mais fonctionnel qui tourne directement sur le maté
 - Générateur de sons (beep)
 - Animation de boot
 
+### 🎮 Addons
+- Fortune (citations aléatoires)
+- Date système (affichage formaté)
+- Uptime (temps de fonctionnement)
+- Color (changement de couleur du texte)
+- Snake (démo de jeu)
+- Guess (jeu de devinettes)
+
 ---
 
 ## 📦 Installation
@@ -59,6 +67,17 @@ RafOS est un OS minimaliste mais fonctionnel qui tourne directement sur le maté
 - `qemu-system-i386` (émulateur)
 
 ### Compilation
+
+#### Option 1: Script automatique (recommandé)
+```bash
+# Compiler l'OS
+./build.sh
+
+# Lancer avec QEMU
+./run.sh
+```
+
+#### Option 2: Compilation manuelle
 ```bash
 # Compiler le bootloader
 nasm -f bin boot.asm -o boot.bin
@@ -69,10 +88,44 @@ nasm -f bin kernel.asm -o kernel.bin
 # Créer l'image disque
 cat boot.bin kernel.bin > rafos.img
 dd if=/dev/zero bs=512 count=2847 >> rafos.img
-Lancement
-qemu-system-i386 -fda rafos.img
+```
 
-🚀 Utilisation
+#### Option 3: Créer un ISO bootable
+```bash
+# Créer une image ISO bootable
+./build-iso.sh
+
+# L'ISO peut être utilisé avec:
+qemu-system-i386 -cdrom rafos.iso
+# Ou gravé sur CD/DVD
+# Ou monté dans une machine virtuelle (VirtualBox, VMware, etc.)
+```
+
+### Lancement
+
+#### Depuis l'image floppy
+```bash
+qemu-system-i386 -fda rafos.img
+```
+
+#### Depuis l'ISO
+```bash
+# Option 1: Script automatique
+./run-iso.sh
+
+# Option 2: Commande directe
+qemu-system-i386 -cdrom rafos.iso
+```
+
+#### Sur machine réelle
+- **Floppy:** Écrire `rafos.img` sur une disquette avec `dd`
+- **CD/DVD:** Graver `rafos.iso` sur un CD/DVD
+- **USB:** Écrire `rafos.img` sur une clé USB avec `dd`
+- **VM:** Monter `rafos.iso` dans VirtualBox, VMware, etc.
+
+---
+
+## 🚀 Utilisation
 Au démarrage, vous verrez :
 ================================
        RafOS v2.0 Advanced     
@@ -214,6 +267,38 @@ help
 Aide complète
 
 
+Addons
+
+
+
+Commande
+Description
+
+
+fortune
+Citation aléatoire inspirante
+
+
+date
+Afficher la date système
+
+
+uptime
+Temps de fonctionnement
+
+
+color
+Changer la couleur du texte (0-15)
+
+
+snake
+Jeu Snake (animation démo)
+
+
+guess
+Jeu de devinettes (1-10)
+
+
 Raccourcis clavier
 
 ↑ / ↓ : Naviguer dans l'historique
@@ -227,9 +312,14 @@ ESC : Sauvegarder (dans l'éditeur)
 rafOS/
 ├── boot.asm          # Bootloader (512 bytes)
 ├── kernel.asm        # Kernel principal (15 KB)
-├── boot.bin          # Bootloader compilé
-├── kernel.bin        # Kernel compilé
-└── rafos.img         # Image disque finale (1.44 MB)
+├── build.sh          # Script de compilation
+├── build-iso.sh      # Script de création ISO
+├── run.sh            # Script de lancement QEMU (floppy)
+├── run-iso.sh        # Script de lancement QEMU (ISO)
+├── boot.bin          # Bootloader compilé (généré)
+├── kernel.bin        # Kernel compilé (généré)
+├── rafos.img         # Image disque floppy (généré)
+└── rafos.iso         # Image ISO bootable (généré)
 Architecture
 
 Bootloader : Charge le kernel en mémoire à 0x1000:0x0000
