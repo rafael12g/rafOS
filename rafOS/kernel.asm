@@ -186,6 +186,11 @@ shell:
     call strcmp
     jz do_guess
     
+    mov si, cmd_buffer
+    mov di, cmd_browser
+    call strcmp
+    jz do_browser
+    
     cmp byte [cmd_buffer], 0
     je shell
     
@@ -384,6 +389,9 @@ do_help:
     call print
     call nl
     mov si, help_guess
+    call print
+    call nl
+    mov si, help_browser
     call print
     call nl
     call nl
@@ -812,6 +820,10 @@ do_snake:
 
 do_guess:
     call game_guess
+    jmp shell
+
+do_browser:
+    call web_browser
     jmp shell
 
 text_editor:
@@ -1678,6 +1690,238 @@ game_guess:
     call clear
     ret
 
+web_browser:
+    call clear
+    
+    ; Initialize browser
+    mov word [current_page], 0
+    mov word [history_depth], 0
+    
+.main_loop:
+    call clear
+    call browser_show_header
+    call browser_render_page
+    call nl
+    call nl
+    call browser_show_menu
+    
+    ; Get user input
+    call getchar
+    
+    ; Check commands
+    cmp al, '1'
+    je .goto_home
+    cmp al, '2'
+    je .goto_about
+    cmp al, '3'
+    je .goto_docs
+    cmp al, '4'
+    je .goto_search
+    cmp al, 'b'
+    je .go_back
+    cmp al, 'B'
+    je .go_back
+    cmp al, 'q'
+    je .quit
+    cmp al, 'Q'
+    je .quit
+    cmp al, 'r'
+    je .refresh
+    cmp al, 'R'
+    je .refresh
+    
+    jmp .main_loop
+
+.goto_home:
+    call browser_save_history
+    mov word [current_page], 0
+    jmp .main_loop
+
+.goto_about:
+    call browser_save_history
+    mov word [current_page], 1
+    jmp .main_loop
+
+.goto_docs:
+    call browser_save_history
+    mov word [current_page], 2
+    jmp .main_loop
+
+.goto_search:
+    call browser_save_history
+    mov word [current_page], 3
+    jmp .main_loop
+
+.go_back:
+    call browser_go_back
+    jmp .main_loop
+
+.refresh:
+    jmp .main_loop
+
+.quit:
+    call clear
+    ret
+
+browser_show_header:
+    mov byte [color], 0x1F
+    mov si, browser_header
+    call print
+    mov byte [color], 0x0F
+    call nl
+    
+    ; Show current URL
+    mov byte [color], 0x0E
+    mov si, browser_url_label
+    call print
+    mov byte [color], 0x0B
+    
+    ; Display URL based on current page
+    mov ax, [current_page]
+    cmp ax, 0
+    je .show_home_url
+    cmp ax, 1
+    je .show_about_url
+    cmp ax, 2
+    je .show_docs_url
+    cmp ax, 3
+    je .show_search_url
+    jmp .done
+
+.show_home_url:
+    mov si, url_home
+    jmp .print_url
+.show_about_url:
+    mov si, url_about
+    jmp .print_url
+.show_docs_url:
+    mov si, url_docs
+    jmp .print_url
+.show_search_url:
+    mov si, url_search
+    jmp .print_url
+
+.print_url:
+    call print
+    
+.done:
+    mov byte [color], 0x0F
+    call nl
+    mov si, browser_separator
+    call print
+    call nl
+    ret
+
+browser_render_page:
+    mov ax, [current_page]
+    cmp ax, 0
+    je .render_home
+    cmp ax, 1
+    je .render_about
+    cmp ax, 2
+    je .render_docs
+    cmp ax, 3
+    je .render_search
+    ret
+
+.render_home:
+    call nl
+    mov byte [color], 0x0E
+    mov si, page_home_title
+    call print
+    call nl
+    mov byte [color], 0x0F
+    call nl
+    mov si, page_home_content
+    call print
+    call nl
+    mov si, page_home_links
+    call print
+    ret
+
+.render_about:
+    call nl
+    mov byte [color], 0x0E
+    mov si, page_about_title
+    call print
+    call nl
+    mov byte [color], 0x0F
+    call nl
+    mov si, page_about_content
+    call print
+    ret
+
+.render_docs:
+    call nl
+    mov byte [color], 0x0E
+    mov si, page_docs_title
+    call print
+    call nl
+    mov byte [color], 0x0F
+    call nl
+    mov si, page_docs_content
+    call print
+    ret
+
+.render_search:
+    call nl
+    mov byte [color], 0x0E
+    mov si, page_search_title
+    call print
+    call nl
+    mov byte [color], 0x0F
+    call nl
+    mov si, page_search_content
+    call print
+    ret
+
+browser_show_menu:
+    mov byte [color], 0x0F
+    mov si, browser_separator
+    call print
+    call nl
+    mov byte [color], 0x0B
+    mov si, browser_menu
+    call print
+    mov byte [color], 0x0F
+    call nl
+    mov si, browser_prompt
+    call print
+    ret
+
+browser_save_history:
+    ; Save current page to history (simple implementation)
+    mov ax, [history_depth]
+    cmp ax, 10
+    jge .skip
+    
+    ; Calculate offset: ax * 2 (word size)
+    shl ax, 1
+    mov bx, ax
+    mov ax, [current_page]
+    mov [page_history + bx], ax
+    inc word [history_depth]
+    
+.skip:
+    ret
+
+browser_go_back:
+    mov ax, [history_depth]
+    test ax, ax
+    jz .done
+    
+    dec ax
+    mov [history_depth], ax
+    
+    ; Load previous page: ax * 2 (word size)
+    shl ax, 1
+    mov bx, ax
+    mov ax, [page_history + bx]
+    mov [current_page], ax
+    
+.done:
+    ret
+
 boot_animation:
     mov si, anim_load
     call print
@@ -1961,6 +2205,7 @@ cmd_uptime: db 'uptime', 0
 cmd_color: db 'color', 0
 cmd_snake: db 'snake', 0
 cmd_guess: db 'guess', 0
+cmd_browser: db 'browser', 0
 
 help_title: db '=== RafOS v2.0 - HELP ===', 0
 help_line: db '================================', 0
@@ -2003,6 +2248,7 @@ help_uptime: db '  uptime        Show uptime', 0
 help_color: db '  color [0-15]  Change text color', 0
 help_snake: db '  snake         Snake game demo', 0
 help_guess: db '  guess         Number guessing game', 0
+help_browser: db '  browser       Text-based web browser', 0
 
 help_tips: db '[Navigation Tips]', 0
 help_tip1: db '  Up/Down arrows   Navigate history', 0
@@ -2091,6 +2337,99 @@ msg_guess_tries: db 'Number of tries: ', 0
 msg_too_high: db 'Too high! Try again.', 0
 msg_too_low: db 'Too low! Try again.', 0
 
+; Browser strings
+browser_header: db '============= RafOS Web Browser v1.0 =============', 0
+browser_url_label: db 'URL: ', 0
+browser_separator: db '==================================================', 0
+browser_menu: db '[1]Home [2]About [3]Docs [4]Search [B]Back [R]Refresh [Q]Quit', 0
+browser_prompt: db 'Enter command: ', 0
+
+; URLs
+url_home: db 'rafos://home', 0
+url_about: db 'rafos://about', 0
+url_docs: db 'rafos://docs', 0
+url_search: db 'rafos://search', 0
+
+; Page: Home
+page_home_title: db '*** Welcome to RafOS Web ***', 0
+page_home_content:
+    db 'Welcome to the RafOS Web Browser!', 13, 10
+    db '', 13, 10
+    db 'This is a text-based web browser built into', 13, 10
+    db 'RafOS v2.0. Navigate between pages using the', 13, 10
+    db 'menu options below.', 13, 10
+    db '', 13, 10
+    db 'Features:', 13, 10
+    db '  * Multiple pages to explore', 13, 10
+    db '  * Navigation history (back button)', 13, 10
+    db '  * Simple URL system', 13, 10
+    db '  * Text-based rendering', 13, 10
+    db '', 0
+page_home_links:
+    db 'Quick Links:', 13, 10
+    db '  [2] Learn about RafOS', 13, 10
+    db '  [3] Read the documentation', 13, 10
+    db '  [4] Search the web', 13, 10, 0
+
+; Page: About
+page_about_title: db '*** About RafOS ***', 0
+page_about_content:
+    db 'RafOS v2.0 Advanced', 13, 10
+    db '', 13, 10
+    db 'RafOS is a 16-bit operating system written', 13, 10
+    db 'entirely in x86 assembly language.', 13, 10
+    db '', 13, 10
+    db 'Key Features:', 13, 10
+    db '  * Bootable from floppy/CD/USB', 13, 10
+    db '  * Interactive shell with history', 13, 10
+    db '  * In-memory file system', 13, 10
+    db '  * Text editor with save functionality', 13, 10
+    db '  * Built-in calculator and utilities', 13, 10
+    db '  * Games and entertainment', 13, 10
+    db '  * Web browser (you are here!)', 13, 10
+    db '', 13, 10
+    db 'Created as an educational project to', 13, 10
+    db 'demonstrate low-level system programming.', 13, 10, 0
+
+; Page: Documentation
+page_docs_title: db '*** Documentation ***', 0
+page_docs_content:
+    db 'RafOS Browser Documentation', 13, 10
+    db '', 13, 10
+    db 'NAVIGATION:', 13, 10
+    db '  Press the number keys to navigate to', 13, 10
+    db '  different pages:', 13, 10
+    db '    [1] - Home page', 13, 10
+    db '    [2] - About RafOS', 13, 10
+    db '    [3] - Documentation (this page)', 13, 10
+    db '    [4] - Search page', 13, 10
+    db '', 13, 10
+    db 'CONTROLS:', 13, 10
+    db '    [B] - Go back to previous page', 13, 10
+    db '    [R] - Refresh current page', 13, 10
+    db '    [Q] - Quit browser', 13, 10
+    db '', 13, 10
+    db 'The browser maintains a simple history', 13, 10
+    db 'of visited pages for easy navigation.', 13, 10, 0
+
+; Page: Search
+page_search_title: db '*** Search RafOS Web ***', 0
+page_search_content:
+    db 'RafOS Search Engine', 13, 10
+    db '', 13, 10
+    db 'Search is currently limited in this', 13, 10
+    db 'text-based browser environment.', 13, 10
+    db '', 13, 10
+    db 'Available pages to visit:', 13, 10
+    db '', 13, 10
+    db '  [1] Home - Main landing page', 13, 10
+    db '  [2] About - Learn about RafOS', 13, 10
+    db '  [3] Docs - Browser documentation', 13, 10
+    db '  [4] Search - This page', 13, 10
+    db '', 13, 10
+    db 'Tip: Use the [B] key to go back to', 13, 10
+    db 'previously visited pages!', 13, 10, 0
+
 str_root: db '/', 0
 str_user_def: db 'user', 0
 str_host_def: db 'rafos', 0
@@ -2113,6 +2452,11 @@ num2: dw 0
 operator: db 0
 secret_num: dw 0
 guess_count: dw 0
+
+; Browser variables
+current_page: dw 0
+history_depth: dw 0
+page_history: times 20 db 0
 
 current_dir: times 32 db 0
 env_user: times 16 db 0
